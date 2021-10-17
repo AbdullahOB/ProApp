@@ -32,7 +32,6 @@ class MyApp extends StatelessWidget {
                 return Center(
                   child: CircularProgressIndicator(
                     backgroundColor: kPrimaryColor,
-
                   ),
                 );
               }
