@@ -23,7 +23,7 @@ class rounderPasswordField extends StatelessWidget {
       decoration: InputDecoration(
         hintText: "Password",
         icon: Icon(
-          Icons.password,
+          Icons.paste_sharp,
           color: kPrimaryColor,
         ),
         suffixIcon: Icon(
