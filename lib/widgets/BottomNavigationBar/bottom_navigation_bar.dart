@@ -4,8 +4,7 @@ import 'package:pro_app/widgets/BottomNavigationBar/bottom_curved_Painter.dart';
 
 class CustomBottomNavigationBar extends StatefulWidget {
   final Function(int) onIconPresedCallback;
-  CustomBottomNavigationBar(
-      {required Key key, required this.onIconPresedCallback})
+  CustomBottomNavigationBar({Key? key, required this.onIconPresedCallback})
       : super(key: key);
 
   @override
