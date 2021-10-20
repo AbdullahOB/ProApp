@@ -6,10 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pro_app/components/mainButton.dart';
 import 'package:pro_app/constants.dart';
+import 'package:pro_app/screens/AfterLogin/AfterLoginScreen.dart';
+import 'package:pro_app/screens/GamesAndGifts/GamesGiftsScreen.dart';
 import 'package:pro_app/screens/Login/LoginScreen.dart';
 import 'package:pro_app/screens/Register/registerScreen.dart';
 import 'package:pro_app/screens/welcome/components/background.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:pro_app/screens/welcome/welcome_screen.dart';
 
 class Body extends StatelessWidget {
   @override
@@ -92,7 +95,28 @@ Widget btnwgt(context) {
                           return RegisterScreen();
                         },
                       )),
-                  child: Text("RegisterScreen"))
+                  child: Text("Register Screen")),
+              TextButton(
+                  onPressed: () => Navigator.push(context, MaterialPageRoute(
+                        builder: (context) {
+                          return LoginScreen();
+                        },
+                      )),
+                  child: Text("Login Screen")),
+              TextButton(
+                  onPressed: () => Navigator.push(context, MaterialPageRoute(
+                        builder: (context) {
+                          return AfterLoginPage();
+                        },
+                      )),
+                  child: Text("After Login Screen")),
+              TextButton(
+                  onPressed: () => Navigator.push(context, MaterialPageRoute(
+                        builder: (context) {
+                          return GamesGiftsScreen();
+                        },
+                      )),
+                  child: Text("Games and Gifts Screen"))
             ],
           )
         ],
