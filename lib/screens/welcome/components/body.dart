@@ -1,18 +1,9 @@
 import 'dart:math';
-
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:pro_app/components/mainButton.dart';
-import 'package:pro_app/constants.dart';
-import 'package:pro_app/screens/Login/LoginScreen.dart';
+import 'package:pro_app/screens/Admin/service.dart';
+import 'package:pro_app/screens/Admin/servicedetails.dart';
 import 'package:pro_app/screens/Register/registerScreen.dart';
-import 'package:pro_app/screens/welcome/components/background.dart';
-import 'package:flutter_svg/svg.dart';
-
-import 'package:pro_app/screens/Admin/users.dart';
+import 'package:pro_app/screens/Admin/dashboard.dart';
 
 class Body extends StatelessWidget {
   @override
@@ -99,10 +90,24 @@ Widget btnwgt(context) {
               TextButton(
                   onPressed: () => Navigator.push(context, MaterialPageRoute(
                         builder: (context) {
-                          return Users();
+                          return Dashboard();
                         },
                       )),
-                  child: Text("admin area"))
+                  child: Text("admin area dashboard")),
+              TextButton(
+                  onPressed: () => Navigator.push(context, MaterialPageRoute(
+                        builder: (context) {
+                          return Service();
+                        },
+                      )),
+                  child: Text("admin area service edit")),
+              TextButton(
+                  onPressed: () => Navigator.push(context, MaterialPageRoute(
+                        builder: (context) {
+                          return ServiceDetails();
+                        },
+                      )),
+                  child: Text("admin area service details")),
             ],
           )
         ],
