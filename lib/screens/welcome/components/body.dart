@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:pro_app/screens/Admin/notifications.dart';
 import 'package:pro_app/screens/Admin/service.dart';
 import 'package:pro_app/screens/Admin/servicedetails.dart';
 import 'package:pro_app/screens/Register/registerScreen.dart';
@@ -108,6 +109,13 @@ Widget btnwgt(context) {
                         },
                       )),
                   child: Text("admin area service details")),
+              TextButton(
+                  onPressed: () => Navigator.push(context, MaterialPageRoute(
+                        builder: (context) {
+                          return ServiceNotifications();
+                        },
+                      )),
+                  child: Text("admin area service notifications")),
             ],
           )
         ],

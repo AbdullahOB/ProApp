@@ -65,7 +65,7 @@ Widget _item() {
                       color: Colors.red.withAlpha(190),
                       borderRadius: BorderRadius.circular(10)),
                   child: TitleText(
-                    text: 'x20',
+                    text: '20',
                     fontSize: 12,
                     color: Colors.white,
                   ),
