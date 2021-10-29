@@ -4,8 +4,7 @@ import 'package:pro_app/widgets/BottomNavigationBar/bottom_curved_Painter.dart';
 
 class CustomBottomNavigationBar extends StatefulWidget {
   final Function(int) onIconPresedCallback;
-  CustomBottomNavigationBar(
-      {required Key key, required this.onIconPresedCallback})
+  CustomBottomNavigationBar({Key? key, required this.onIconPresedCallback})
       : super(key: key);
 
   @override
@@ -79,19 +78,16 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar>
                   color: isEnable ? kPrimaryColor : Colors.white,
                   boxShadow: <BoxShadow>[
                     BoxShadow(
-                      color: isEnable ? Color(0xfffeece2) : Colors.white,
-                      blurRadius: 10,
-                      spreadRadius: 5,
+                      color: isEnable ? Colors.white : Colors.white,
+                      blurRadius: 3,
+                      spreadRadius: 1,
                       offset: Offset(5, 5),
                     ),
                   ],
                   shape: BoxShape.circle),
               child: Opacity(
-                opacity: isEnable ? _yController.value : 1,
-                child: Icon(icon,
-                    color: isEnable
-                        ? kPrimaryLightColor
-                        : Theme.of(context).iconTheme.color),
+                opacity: isEnable ? 1 : 1,
+                child: Icon(icon, color: isEnable ? Colors.white : Colors.grey),
               )),
         ),
       ),
@@ -107,7 +103,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar>
             begin: Curves.easeInExpo.transform(_yController.value),
             end: inCurve.transform(_yController.value),
           ).transform(_yController.velocity.sign * 0.5 + 0.5),
-          Theme.of(context).backgroundColor),
+          Colors.white),
     );
   }
 
@@ -129,14 +125,14 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar>
     _yController.value = 1.0;
     _xController.animateTo(
         _indexToPosition(index) / MediaQuery.of(context).size.width,
-        duration: Duration(milliseconds: 620));
+        duration: Duration(milliseconds: 500));
     Future.delayed(
-      Duration(milliseconds: 500),
+      Duration(milliseconds: 300),
       () {
-        _yController.animateTo(1.0, duration: Duration(milliseconds: 1200));
+        _yController.animateTo(0.5, duration: Duration(milliseconds: 200));
       },
     );
-    _yController.animateTo(0.0, duration: Duration(milliseconds: 300));
+    _yController.animateTo(0.0, duration: Duration(milliseconds: 200));
   }
 
   @override
