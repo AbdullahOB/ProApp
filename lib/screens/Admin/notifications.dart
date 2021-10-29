@@ -30,7 +30,7 @@ class _ServiceNotificationsState extends State<ServiceNotifications> {
                 children: [
                   Padding(padding: EdgeInsets.only(top: 10)),
                   TitleText(
-                    text: "Admin Panel",
+                    text: "Admin Panel / Recent Orders",
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
                   ),
@@ -80,7 +80,7 @@ class _ServiceNotificationsState extends State<ServiceNotifications> {
                     width: 70,
                     child: Container(
                       decoration: BoxDecoration(
-                          color: Colors.black87,
+                          color: Colors.green,
                           borderRadius: BorderRadius.circular(10)),
                     ),
                   ),
@@ -88,7 +88,7 @@ class _ServiceNotificationsState extends State<ServiceNotifications> {
                 Center(
                   child: Icon(
                     Icons.card_giftcard_rounded,
-                    color: Colors.blue,
+                    color: Colors.black,
                     size: 40,
                   ),
                 )
@@ -105,7 +105,7 @@ class _ServiceNotificationsState extends State<ServiceNotifications> {
                   subtitle: Row(
                     children: <Widget>[
                       TitleText(
-                        text: "Manage and edit",
+                        text: "pubg coin",
                         fontSize: 14,
                       ),
                     ],
@@ -131,7 +131,7 @@ class _ServiceNotificationsState extends State<ServiceNotifications> {
   Widget _requestorder(queryData) {
     return Container(
         margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
-        height: (80 * 9) + 200,
+        height: (80 * 4) + 150,
         width: queryData.size.width,
         color: Colors.white,
         child:
@@ -196,32 +196,46 @@ class _ServiceNotificationsState extends State<ServiceNotifications> {
               ],
             ),
           ),
-          _item(),
-          _item(),
-          _item(),
-          _item(),
-          _item(),
-          _item(),
-          _item(),
-          _item(),
-          _item(),
+          FlatButton(
+            splashColor: Colors.transparent,
+            child: _item(),
+            onPressed: _showMyDialog,
+          ),
+          FlatButton(
+            splashColor: Colors.transparent,
+            child: _item(),
+            onPressed: _showMyDialog,
+          ),
+          FlatButton(
+            splashColor: Colors.transparent,
+            child: _item(),
+            onPressed: _showMyDialog,
+          ),
+          FlatButton(
+            splashColor: Colors.transparent,
+            child: _item(),
+            onPressed: _showMyDialog,
+          ),
           Padding(padding: EdgeInsets.only(top: 20)),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              TitleText(
-                text: "Total",
-                fontSize: 20,
-                fontWeight: FontWeight.w700,
-              ),
-              TitleText(
-                text: "200TL",
-                fontSize: 15,
-                fontWeight: FontWeight.w700,
-                color: Colors.black,
-              ),
-            ],
+          Container(
+            height: 50,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TitleText(
+                  text: "Total",
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700,
+                ),
+                TitleText(
+                  text: "200TL",
+                  fontSize: 15,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.black,
+                ),
+              ],
+            ),
           ),
         ]));
   }
