@@ -31,7 +31,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                 children: [
                   Padding(padding: EdgeInsets.only(top: 10)),
                   TitleText(
-                    text: "Admin Panel",
+                    text: "Admin Panel / Edit and Manage Service",
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
                   ),

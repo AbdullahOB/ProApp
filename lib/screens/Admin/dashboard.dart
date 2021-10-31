@@ -95,7 +95,7 @@ class _DashboardState extends State<Dashboard> {
                 children: [
                   Padding(padding: EdgeInsets.only(top: 10)),
                   TitleText(
-                    text: "Admin Panel",
+                    text: "Admin Panel / Dashboard",
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
                   ),
