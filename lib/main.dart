@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
               } else {
                 return Center(
                   child: CircularProgressIndicator(
-                    color: kPrimaryColor,
+                    backgroundColor: kPrimaryColor,
                   ),
                 );
               }
