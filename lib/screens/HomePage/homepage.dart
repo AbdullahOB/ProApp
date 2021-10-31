@@ -1,5 +1,4 @@
 import 'package:pro_app/widgets/title_text.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
 import 'components/adminbar.dart';
 import 'package:flutter/material.dart';
 
