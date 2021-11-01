@@ -1,4 +1,3 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -12,9 +11,6 @@ import 'package:pro_app/components/textField.dart';
 import 'package:pro_app/constants.dart';
 import 'package:pro_app/screens/Login/LoginScreen.dart';
 import 'package:pro_app/screens/Register/components/background.dart';
-import 'package:pro_app/services/auth.dart';
-
-final AuthService _auth = AuthService();
 
 String email = '';
 String password = '';
@@ -91,20 +87,7 @@ class Body extends StatelessWidget {
                   ButtonMain(
                       text: "Register Now",
                       press: () async {
-                        if (_formKey.currentState!.validate()) {
-                          dynamic result = await _auth
-                              .registerWithEmailPassword(email, password);
-                          if (result == null) {
-                            Fluttertoast.showToast(
-                                msg: "Please Supply a Valid Email",
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.CENTER,
-                                timeInSecForIosWeb: 1,
-                                backgroundColor: Colors.red,
-                                textColor: Colors.white,
-                                fontSize: 16.0);
-                          }
-                        }
+                        if (_formKey.currentState!.validate()) {}
                       }),
                 ],
               ),
