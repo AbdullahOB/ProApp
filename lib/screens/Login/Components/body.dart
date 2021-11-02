@@ -9,10 +9,7 @@ import 'package:pro_app/components/roundedTextField.dart';
 import 'package:pro_app/components/textField.dart';
 import 'package:pro_app/constants.dart';
 import 'package:pro_app/screens/Register/registerScreen.dart';
-import 'package:pro_app/services/auth.dart';
 import 'background.dart';
-
-final AuthService _auth = AuthService();
 
 class Body extends StatelessWidget {
   const Body({
