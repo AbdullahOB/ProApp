@@ -14,37 +14,32 @@ var images2 = [
   "https://lh3.googleusercontent.com/proxy/sOMZRAnpZPfcNHRRMvjjlCT7lDjmtnD5WL2BVsuufzMXqwemtbFbgoHOVB_Pg-YDIh8N_unHfQZ0SKmmdS6yQcQbGhhuAywxjjPcmx48iKqUqyN671lGnHKbGbjtPGg7NkXHv8j7mvzcTbr01SvvqvjlTzT9dQ",
 ];
 
+AppBar AppBarUserProfile(BuildContext context) {
+  return AppBar(
+    leading: IconButton(
+      icon: Icon(Icons.arrow_back_ios_outlined, color: Colors.white),
+      onPressed: () => Navigator.of(context).pop(),
+    ),
+    title: Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text("My Profile",
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700)),
+        SizedBox(height: 5),
+        Text("You Can Edit Your Favourites From Here",
+            style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400))
+      ],
+    ),
+    backgroundColor: kPrimaryColor,
+  );
+}
+
 class Favouritepage extends StatefulWidget {
   const Favouritepage({Key? key}) : super(key: key);
 
   @override
   _FavouritepageState createState() => _FavouritepageState();
-}
-
-Widget sliderTitle() {
-  return Column(
-    children: [
-      Padding(padding: EdgeInsets.only(top: 20)),
-      Container(
-        margin: EdgeInsets.fromLTRB(3, 0, 3, 0),
-        width: double.infinity,
-        child: Row(
-          children: [
-            TitleText(
-              text: "Category",
-              fontSize: 18,
-              fontWeight: FontWeight.w700,
-            ),
-            Icon(
-              Icons.arrow_forward_ios_outlined,
-              size: 18,
-            )
-          ],
-        ),
-      ),
-      Padding(padding: EdgeInsets.only(top: 10)),
-    ],
-  );
 }
 
 Widget slider() {
@@ -72,7 +67,7 @@ Widget slider() {
                 ),
               ],
             ),
-            margin: EdgeInsets.only(left: 5, right: 10),
+            margin: EdgeInsets.only(left: 5, right: 10, top: 8),
             child: Center(
               child: Stack(
                 alignment: Alignment.topRight,
@@ -145,11 +140,22 @@ Widget slider() {
                         fontWeight: FontWeight.w700,
                         color: kPrimaryColor,
                       ),
-                      TitleText(
-                        text: "25 Coin",
-                        fontSize: 12,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.grey,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          TitleText(
+                            text: "25 ",
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.grey,
+                          ),
+                          TitleText(
+                            text: "Coin",
+                            fontSize: 13,
+                            fontWeight: FontWeight.w700,
+                            color: kPrimaryColor,
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -170,100 +176,35 @@ Widget slider() {
       ));
 }
 
-Widget categoriesSlider() {
-  return Container(
-    color: Colors.white,
-    height: 80,
-    margin: EdgeInsets.only(bottom: 0, top: 10),
-    child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: 10,
-        itemBuilder: (BuildContext ctxt, int index) {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.rectangle,
-                  border: Border.all(width: 2.0, color: kPrimaryLightColor),
-                  borderRadius: BorderRadius.circular(8.0),
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(
-                      color: Colors.grey,
-                      spreadRadius: 0.0,
-                      blurRadius: 5.0,
-                      offset: Offset(0.0, 3.0),
-                    ),
-                  ],
-                ),
-                margin: EdgeInsets.only(left: 5, right: 10),
-                child: Center(
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.gamepad,
-                        color: Colors.green,
-                      ),
-                      SizedBox(
-                        width: 4,
-                      ),
-                      TitleText(
-                        text: "Gamming",
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
-                        color: kPrimaryColor,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          );
-        }),
-  );
-}
-
 class _FavouritepageState extends State<Favouritepage> {
   @override
   Widget build(BuildContext context) {
     MediaQueryData queryData;
     queryData = MediaQuery.of(context);
-    return SafeArea(
-      child: Material(
-          child: Container(
-        width: double.infinity,
-        height: queryData.size.height,
-        child: ListView(children: [
-          Container(
-            padding: EdgeInsets.only(bottom: 20),
-            width: double.infinity,
-            height: 100,
-            color: Colors.green,
-            child: TitleText(
-              text: "ProApp",
-              fontSize: 27,
-              fontWeight: FontWeight.w700,
-              color: Colors.black,
-            ),
-          ),
-          Container(
-            height: queryData.size.height - 100,
-            width: double.infinity,
-            child: GridView.count(
-              crossAxisCount: 2,
-              childAspectRatio: 0.8,
-              children: List.generate(100, (index) {
-                return Container(
-                  child: slider(),
-                );
-              }),
-            ),
-          )
-        ]),
-      )),
+    return Scaffold(
+      body: SafeArea(
+        child: Material(
+            child: Container(
+          width: double.infinity,
+          height: queryData.size.height,
+          child: ListView(children: [
+            Container(
+              height: queryData.size.height - 100,
+              width: double.infinity,
+              child: GridView.count(
+                crossAxisCount: 2,
+                childAspectRatio: 0.8,
+                children: List.generate(100, (index) {
+                  return Container(
+                    child: slider(),
+                  );
+                }),
+              ),
+            )
+          ]),
+        )),
+      ),
+      appBar: AppBarUserProfile(context),
     );
   }
 }

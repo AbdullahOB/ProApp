@@ -277,7 +277,7 @@ class _userNotificationsState extends State<userNotifications> {
 AppBar AppBarUserProfile(BuildContext context) {
   return AppBar(
     leading: IconButton(
-      icon: Icon(Icons.arrow_back_ios_new_outlined, color: Colors.white),
+      icon: Icon(Icons.arrow_back_ios_outlined, color: Colors.white),
       onPressed: () => Navigator.of(context).pop(),
     ),
     title: Column(

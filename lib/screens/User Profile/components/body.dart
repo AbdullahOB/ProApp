@@ -1,16 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pro_app/components/gradientIcon.dart';
-import 'package:pro_app/screens/User/components/edit_user_profile.dart';
-import 'package:pro_app/screens/User/components/notification_user_profile.dart';
+import 'package:pro_app/screens/User%20Profile/components/edit_user_profile.dart';
+import 'package:pro_app/screens/User%20Profile/components/notification_user_profile.dart';
 import 'package:pro_app/widgets/title_text.dart';
-
 import '../../../constants.dart';
 
 AppBar AppBarUserProfile(BuildContext context) {
   return AppBar(
     leading: IconButton(
-      icon: Icon(Icons.arrow_back_ios_new_outlined, color: Colors.white),
+      icon: Icon(Icons.arrow_back_ios_outlined, color: Colors.white),
       onPressed: () => Navigator.of(context).pop(),
     ),
     title: Column(
