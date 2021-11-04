@@ -18,21 +18,6 @@ class MyApp extends StatelessWidget {
           primaryColor: kPrimaryColor,
           scaffoldBackgroundColor: Colors.white,
         ),
-        home: FutureBuilder(builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            print("You have an error Here! ${snapshot.error.toString()}");
-            return Text("Something went wrong!");
-          } else if (snapshot.hasData) {
-            return WelcomeScreen();
-          } else {
-            return Center(
-              child: CircularProgressIndicator(
-                backgroundColor: kPrimaryColor,
-              ),
-            );
-          }
-        })
-        //WelcomeScreen(),
-        );
+        home: WelcomeScreen());
   }
 }

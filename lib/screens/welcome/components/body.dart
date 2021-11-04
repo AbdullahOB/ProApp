@@ -8,6 +8,7 @@ import 'package:pro_app/screens/Admin/servicedetails.dart';
 import 'package:pro_app/screens/HomePage/homepage.dart';
 import 'package:pro_app/screens/Register/registerScreen.dart';
 import 'package:pro_app/screens/Admin/dashboard.dart';
+import 'package:pro_app/screens/User/user_profile.dart';
 
 class Body extends StatelessWidget {
   @override
@@ -140,6 +141,13 @@ Widget btnwgt(context) {
                         },
                       )),
                   child: Text("admin area user profile")),
+              TextButton(
+                  onPressed: () => Navigator.push(context, MaterialPageRoute(
+                        builder: (context) {
+                          return UserProfile();
+                        },
+                      )),
+                  child: Text("User Profile")),
             ],
           )
         ],
