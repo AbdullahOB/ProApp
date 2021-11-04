@@ -12,12 +12,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Pro App',
-        theme: ThemeData(
-          primaryColor: kPrimaryColor,
-          scaffoldBackgroundColor: Colors.white,
-        ),
-        home: WelcomeScreen());
+      debugShowCheckedModeBanner: false,
+      title: 'Pro App',
+      theme: ThemeData(
+        primaryColor: kPrimaryColor,
+        scaffoldBackgroundColor: Colors.white,
+      ),
+      home: WelcomeScreen(),
+
+      //WelcomeScreen(),
+    );
   }
 }

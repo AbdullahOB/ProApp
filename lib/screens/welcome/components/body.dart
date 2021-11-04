@@ -9,6 +9,7 @@ import 'package:pro_app/screens/HomePage/homepage.dart';
 import 'package:pro_app/screens/Register/registerScreen.dart';
 import 'package:pro_app/screens/Admin/dashboard.dart';
 import 'package:pro_app/screens/User/user_profile.dart';
+import 'package:pro_app/screens/favourite/favourite.dart';
 
 class Body extends StatelessWidget {
   @override
@@ -148,6 +149,13 @@ Widget btnwgt(context) {
                         },
                       )),
                   child: Text("User Profile")),
+              TextButton(
+                  onPressed: () => Navigator.push(context, MaterialPageRoute(
+                        builder: (context) {
+                          return Favouritepage();
+                        },
+                      )),
+                  child: Text("user favourite page")),
             ],
           )
         ],
