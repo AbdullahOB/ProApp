@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:pro_app/screens/Admin/admin_profile.dart';
 import 'package:pro_app/screens/Admin/coins.dart';
+import 'package:pro_app/screens/Admin/components/adminbar.dart';
 import 'package:pro_app/screens/Admin/notifications.dart';
 import 'package:pro_app/screens/Admin/service.dart';
 import 'package:pro_app/screens/Admin/servicedetails.dart';
@@ -96,38 +97,10 @@ Widget btnwgt(context) {
               TextButton(
                   onPressed: () => Navigator.push(context, MaterialPageRoute(
                         builder: (context) {
-                          return Dashboard();
+                          return Adimnbar();
                         },
                       )),
                   child: Text("admin area dashboard")),
-              TextButton(
-                  onPressed: () => Navigator.push(context, MaterialPageRoute(
-                        builder: (context) {
-                          return Service();
-                        },
-                      )),
-                  child: Text("admin area service edit")),
-              TextButton(
-                  onPressed: () => Navigator.push(context, MaterialPageRoute(
-                        builder: (context) {
-                          return ServiceDetails();
-                        },
-                      )),
-                  child: Text("admin area service details")),
-              TextButton(
-                  onPressed: () => Navigator.push(context, MaterialPageRoute(
-                        builder: (context) {
-                          return ServiceNotifications();
-                        },
-                      )),
-                  child: Text("admin area service notifications")),
-              TextButton(
-                  onPressed: () => Navigator.push(context, MaterialPageRoute(
-                        builder: (context) {
-                          return Coins();
-                        },
-                      )),
-                  child: Text("admin area send coins")),
               TextButton(
                   onPressed: () => Navigator.push(context, MaterialPageRoute(
                         builder: (context) {

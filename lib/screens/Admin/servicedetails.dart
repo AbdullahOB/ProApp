@@ -16,70 +16,53 @@ class _ServiceDetailsState extends State<ServiceDetails> {
   Widget build(BuildContext context) {
     MediaQueryData queryData;
     queryData = MediaQuery.of(context);
-    return SafeArea(
-      child: Material(
-        child: Stack(
-          children: [
-            Container(
-              padding: EdgeInsets.all(5),
-              width: queryData.size.width,
-              height: queryData.size.height,
-              color: Colors.white,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(padding: EdgeInsets.only(top: 10)),
-                  TitleText(
-                    text: "Admin Panel / Edit and Manage Service",
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
-                  ),
-                  TitleText(
-                    text: "Osid Alsagir",
-                    fontSize: 27,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.black,
-                  ),
-                  Padding(padding: EdgeInsets.only(bottom: 10)),
-                  Expanded(
-                      child: ListView(children: [
-                    TitleText(
-                      text: "Service name",
-                      fontSize: 14,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.green,
-                    ),
-                    Container(
-                      height: 10,
-                    ),
-                    _item(true, "ServiceDetails name", "text"),
-                    _item(false, "ServiceDetails old price", "number"),
-                    _item(false, "ServiceDetails price", "number"),
-                    _item(false, "ServiceDetails Discription", "longtext"),
-                    ButtonMain(
-                        text: "ok",
-                        press: () async {
-                          print("dasd");
-                        }),
-                    ButtonMain(
-                        text: "back",
-                        press: () async {
-                          print("dasd");
-                        }),
-                    Container(
-                      height: 100,
-                    )
-                  ]))
-                ],
-              ),
-            ),
-            Container(
-              child: Adimnbar(),
-            ),
-          ],
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(padding: EdgeInsets.only(top: 10)),
+        TitleText(
+          text: "Admin Panel / Edit and Manage Service",
+          fontSize: 20,
+          fontWeight: FontWeight.w700,
         ),
-      ),
+        TitleText(
+          text: "Osid Alsagir",
+          fontSize: 27,
+          fontWeight: FontWeight.w700,
+          color: Colors.black,
+        ),
+        Padding(padding: EdgeInsets.only(bottom: 10)),
+        Expanded(
+            child: ListView(children: [
+          TitleText(
+            text: "Service name",
+            fontSize: 14,
+            fontWeight: FontWeight.w700,
+            color: Colors.green,
+          ),
+          Container(
+            height: 10,
+          ),
+          _item(true, "ServiceDetails name", "text"),
+          _item(false, "ServiceDetails old price", "number"),
+          _item(false, "ServiceDetails price", "number"),
+          _item(false, "ServiceDetails Discription", "longtext"),
+          ButtonMain(
+              text: "ok",
+              press: () async {
+                print("dasd");
+              }),
+          ButtonMain(
+              text: "back",
+              press: () async {
+                print("dasd");
+              }),
+          Container(
+            height: 100,
+          )
+        ]))
+      ],
     );
   }
 
