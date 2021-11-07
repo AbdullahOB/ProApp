@@ -9,6 +9,7 @@ class MainPage extends StatelessWidget {
       body: Body(
         title: "Home Page",
       ),
+      // bottomNavigationBar: bottomNavBar(),
     );
   }
 }

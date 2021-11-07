@@ -9,8 +9,8 @@ import 'package:pro_app/screens/Admin/servicedetails.dart';
 import 'package:pro_app/screens/HomePage/homepage.dart';
 import 'package:pro_app/screens/Register/registerScreen.dart';
 import 'package:pro_app/screens/Admin/dashboard.dart';
-import 'package:pro_app/screens/User%20Profile/user_profile.dart';
-import 'package:pro_app/screens/favourite/favourite.dart';
+import 'package:pro_app/screens/UserProfile/user_profile.dart';
+import 'package:pro_app/screens/favourite/Favourite.dart';
 
 class Body extends StatelessWidget {
   @override

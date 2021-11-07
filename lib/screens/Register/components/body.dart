@@ -98,7 +98,7 @@ class Body extends StatelessWidget {
             AlreadyHaveAnAccountText(
                 login: false,
                 press: () {
-                  Navigator.push(
+                  Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                       builder: (context) {

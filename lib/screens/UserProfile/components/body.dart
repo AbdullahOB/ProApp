@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pro_app/components/gradientIcon.dart';
-import 'package:pro_app/screens/User%20Profile/components/edit_user_profile.dart';
-import 'package:pro_app/screens/User%20Profile/components/notification_user_profile.dart';
+import 'package:pro_app/screens/UserProfile/components/edit_user_profile.dart';
+import 'package:pro_app/screens/UserProfile/components/notification_user_profile.dart';
 import 'package:pro_app/widgets/title_text.dart';
 import '../../../constants.dart';
 
