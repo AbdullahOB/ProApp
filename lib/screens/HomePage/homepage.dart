@@ -265,6 +265,7 @@ class _HomepageState extends State<Homepage> {
     return SafeArea(
       child: Material(
         child: Stack(
+          alignment: Alignment.bottomCenter,
           children: [
             Container(
               padding: EdgeInsets.all(0),
@@ -349,11 +350,7 @@ class _HomepageState extends State<Homepage> {
               ),
             ),
             Container(
-              child: Positioned(
-                bottom: 0,
-                left: 0,
-                child: bottomNavBar(),
-              ),
+              child: bottomNavBar(),
             ),
           ],
         ),
