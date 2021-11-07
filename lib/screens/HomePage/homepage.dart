@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:pro_app/components/bottomNavBar.dart';
 import 'package:pro_app/widgets/title_text.dart';
 import '../../constants.dart';
 import 'components/adminbar.dart';
@@ -348,7 +349,11 @@ class _HomepageState extends State<Homepage> {
               ),
             ),
             Container(
-              child: UserBar(),
+              child: Positioned(
+                bottom: 0,
+                left: 0,
+                child: bottomNavBar(),
+              ),
             ),
           ],
         ),

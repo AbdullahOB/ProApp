@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pro_app/components/bottomNavBar.dart';
 import 'package:pro_app/screens/HomePage/components/body.dart';
 
 class MainPage extends StatelessWidget {
