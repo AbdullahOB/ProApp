@@ -189,18 +189,23 @@ class _FavouritepageState extends State<Favouritepage> {
           height: queryData.size.height,
           child: ListView(children: [
             Container(
-              height: queryData.size.height - 100,
+              height: queryData.size.height - 150,
               width: double.infinity,
               child: GridView.count(
                 crossAxisCount: 2,
-                childAspectRatio: 0.8,
+                childAspectRatio: 0.7,
                 children: List.generate(100, (index) {
                   return Container(
                     child: slider(),
                   );
                 }),
               ),
-            )
+            ),
+            Container(
+              height: 150,
+              width: double.infinity,
+              color: Colors.green,
+            ),
           ]),
         )),
       ),

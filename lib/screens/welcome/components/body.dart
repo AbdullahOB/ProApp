@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:pro_app/screens/Admin/admin_profile.dart';
+import 'package:pro_app/screens/Admin/category.dart';
 import 'package:pro_app/screens/Admin/coins.dart';
 import 'package:pro_app/screens/Admin/components/adminbar.dart';
 import 'package:pro_app/screens/Admin/notifications.dart';
@@ -129,6 +130,13 @@ Widget btnwgt(context) {
                         },
                       )),
                   child: Text("user favourite page")),
+              TextButton(
+                  onPressed: () => Navigator.push(context, MaterialPageRoute(
+                        builder: (context) {
+                          return Category();
+                        },
+                      )),
+                  child: Text("category page")),
             ],
           )
         ],

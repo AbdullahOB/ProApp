@@ -28,7 +28,7 @@ class bottomNavBar extends StatelessWidget {
         ),
         Icon(
           Icons.home,
-          size: 35,
+          size: 20,
           color: Colors.white,
         ),
         Icon(
