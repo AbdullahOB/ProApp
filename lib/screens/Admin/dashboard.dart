@@ -1,3 +1,4 @@
+import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:pro_app/widgets/title_text.dart';
 
 import 'components/adminbar.dart';
@@ -10,7 +11,7 @@ class Dashboard extends StatefulWidget {
   _DashboardState createState() => _DashboardState();
 }
 
-Widget _item() {
+Widget _item(name) {
   return Container(
     height: 80,
     child: Row(
@@ -45,7 +46,7 @@ Widget _item() {
         Expanded(
             child: ListTile(
                 title: TitleText(
-                  text: "Gifts",
+                  text: name,
                   fontSize: 15,
                   fontWeight: FontWeight.w700,
                 ),
@@ -76,6 +77,21 @@ Widget _item() {
 }
 
 class _DashboardState extends State<Dashboard> {
+  var products = [];
+  var loadproducts = true;
+  @override
+  void initState() {
+    get_all_prducts();
+    super.initState();
+  }
+
+  Future<void> get_all_prducts() async {
+    products = await get_products();
+    setState(() {
+      loadproducts = products.length > 0 ? false : true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     MediaQueryData queryData;
@@ -98,21 +114,37 @@ class _DashboardState extends State<Dashboard> {
         ),
         Padding(padding: EdgeInsets.only(bottom: 10)),
         Expanded(
-            child: ListView(children: [
-          _item(),
-          _item(),
-          _item(),
-          _item(),
-          _item(),
-          _item(),
-          _item(),
-          _item(),
-          _item(),
-          Container(
-            height: 100,
-          )
-        ]))
+            child: loadproducts
+                ? ListView.builder(
+                    // Let the ListView know how many items it needs to build.
+                    itemCount: 1,
+                    // Provide a builder function. This is where the magic happens.
+                    // Convert each item into a widget based on the type of item it is.
+                    itemBuilder: (context, index) {
+                      return Center(
+                        child: TitleText(text: "loading products"),
+                      );
+                    },
+                  )
+                : ListView.builder(
+                    itemCount: products.length,
+                    itemBuilder: (context, index) {
+                      return _item(products[index]["name"]);
+                    },
+                  ))
       ],
     );
+  }
+
+  Future<List<ParseObject>> get_products() async {
+    QueryBuilder<ParseObject> queryTodo =
+        QueryBuilder<ParseObject>(ParseObject('products'));
+    final ParseResponse apiResponse = await queryTodo.query();
+
+    if (apiResponse.success && apiResponse.results != null) {
+      return apiResponse.results as List<ParseObject>;
+    } else {
+      return [];
+    }
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:pro_app/constants.dart';
 import 'package:pro_app/screens/Admin/categories.dart';
 import 'package:pro_app/screens/Admin/category.dart';
@@ -22,8 +23,10 @@ class Adimnbar extends StatefulWidget {
 
 class _AdimnbarState extends State<Adimnbar> {
   Widget currentWidget = Dashboard();
+
   @override
   Widget build(BuildContext context) {
+
     MediaQueryData queryData;
     queryData = MediaQuery.of(context);
     return Scaffold(
@@ -196,4 +199,6 @@ class _AdimnbarState extends State<Adimnbar> {
         break;
     }
   }
+
+  
 }
