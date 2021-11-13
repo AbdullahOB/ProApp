@@ -100,7 +100,7 @@ class _AdimnbarState extends State<Adimnbar> {
             ListTile(
               title: const Text('Categories'),
               onTap: () {
-                onBottomIconPressed(8);
+                onBottomIconPressed(4);
                 Navigator.pop(context);
               },
             ),
