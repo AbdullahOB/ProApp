@@ -11,16 +11,17 @@ import 'package:pro_app/components/textField.dart';
 import 'package:pro_app/constants.dart';
 import 'package:pro_app/screens/Login/LoginScreen.dart';
 import 'package:pro_app/screens/Register/components/background.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
-String email = '';
-String password = '';
-String error = '';
+class Body extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
 
-class Body extends StatelessWidget {
-  const Body({
-    Key? key,
-  }) : super(key: key);
-
+class _HomePageState extends State<Body> {
+  final controllerPassword = TextEditingController();
+  final controllerEmail = TextEditingController();
+  bool isLoggedIn = false;
   @override
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
@@ -51,9 +52,8 @@ class Body extends StatelessWidget {
                   RoundedInputField(
                     hintText: "Your Email",
                     icon: Icons.person,
-                    onChanged: (value) {
-                      email = value;
-                    },
+                    controllerName: controllerEmail,
+                    onChanged: (value) {},
                     validator: (value) {
                       value.isEmpty
                           ? Fluttertoast.showToast(
@@ -68,9 +68,8 @@ class Body extends StatelessWidget {
                     },
                   ),
                   rounderPasswordField(
-                    onChaged: (value) {
-                      password = value;
-                    },
+                    controllerName: controllerPassword,
+                    onChaged: (value) {},
                     validator: (value) {
                       value.length < 6
                           ? Fluttertoast.showToast(
@@ -87,8 +86,11 @@ class Body extends StatelessWidget {
                   ButtonMain(
                       text: "Register Now",
                       press: () async {
-                        if (_formKey.currentState!.validate()) {}
+                        if (_formKey.currentState!.validate()) {
+                          doUserRegistration();
+                        }
                       }),
+                  ButtonMain(text: "Logout", press: doUserLogout)
                 ],
               ),
             ),
@@ -129,5 +131,87 @@ class Body extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void showSuccess() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Success!"),
+          content: const Text("User was successfully created!"),
+          actions: <Widget>[
+            new FlatButton(
+              child: const Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void showError(String errorMessage) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Error!"),
+          content: Text(errorMessage),
+          actions: <Widget>[
+            new FlatButton(
+              child: const Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void doUserRegistration() async {
+    final email = controllerEmail.text.trim();
+    final password = controllerPassword.text.trim();
+    final username = controllerEmail.text.trim();
+
+    final user = ParseUser.createUser(username, password, email);
+
+    var response = await user.signUp();
+
+    if (response.success) {
+      showSuccess();
+      setState(() {
+        isLoggedIn = true;
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              return LoginScreen();
+            },
+          ),
+        );
+      });
+    } else {
+      showError(response.error!.message);
+    }
+  }
+
+  void doUserLogout() async {
+    final user = await ParseUser.currentUser() as ParseUser;
+    var response = await user.logout();
+
+    if (response.success) {
+      showSuccess();
+      setState(() {
+        isLoggedIn = false;
+      });
+    } else {
+      showError(response.error!.message);
+    }
   }
 }

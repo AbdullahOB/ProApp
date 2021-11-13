@@ -6,11 +6,13 @@ import '../constants.dart';
 class rounderPasswordField extends StatelessWidget {
   final FormFieldValidator validator;
   final ValueChanged<String> onChaged;
+  final controllerName;
 
   const rounderPasswordField({
     Key? key,
     required this.onChaged,
     required this.validator,
+    required this.controllerName,
   }) : super(key: key);
 
   @override
@@ -20,6 +22,7 @@ class rounderPasswordField extends StatelessWidget {
       obscureText: true,
       onChanged: onChaged,
       validator: validator,
+      controller: controllerName,
       decoration: InputDecoration(
         hintText: "Password",
         icon: Icon(

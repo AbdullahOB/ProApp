@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:pro_app/components/OrDivider.dart';
 import 'package:pro_app/components/alreadyHaveAnAccount.dart';
 import 'package:pro_app/components/mainButton.dart';
@@ -8,13 +9,19 @@ import 'package:pro_app/components/roundedPasswordField.dart';
 import 'package:pro_app/components/roundedTextField.dart';
 import 'package:pro_app/components/textField.dart';
 import 'package:pro_app/constants.dart';
+import 'package:pro_app/screens/HomePage/homepage.dart';
 import 'package:pro_app/screens/Register/registerScreen.dart';
 import 'background.dart';
 
-class Body extends StatelessWidget {
-  const Body({
-    Key? key,
-  }) : super(key: key);
+class Body extends StatefulWidget {
+  @override
+  _Body createState() => _Body();
+}
+
+class _Body extends State<Body> {
+  final controllerUsername = TextEditingController();
+  final controllerPassword = TextEditingController();
+  bool isLoggedIn = false;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -35,12 +42,15 @@ class Body extends StatelessWidget {
               height: size.height * 0.38,
             ),
             RoundedInputField(
-              hintText: "Your Email",
+              controllerName: controllerUsername,
+              hintText: "Your Username",
               icon: Icons.person,
               onChanged: (value) {},
-              validator: (value) => value.isEmpty ? 'Enter Your Email' : null,
+              validator: (value) =>
+                  value.isEmpty ? 'Enter Your Username' : null,
             ),
             rounderPasswordField(
+              controllerName: controllerPassword,
               onChaged: (value) {},
               validator: (value) {
                 value.length < 6 ? 'Enter Your Password +6 characters' : null;
@@ -49,14 +59,12 @@ class Body extends StatelessWidget {
             ButtonMain(
                 text: "Login Now",
                 press: () async {
-                  Fluttertoast.showToast(
-                      msg: "Test",
-                      toastLength: Toast.LENGTH_SHORT,
-                      gravity: ToastGravity.CENTER,
-                      timeInSecForIosWeb: 1,
-                      backgroundColor: Colors.red,
-                      textColor: Colors.white,
-                      fontSize: 16.0);
+                  doUserLogin();
+                }),
+            ButtonMain(
+                text: "Logut Session TEST",
+                press: () async {
+                  doUserLogout();
                 }),
             SizedBox(
               height: size.height * 0.02,
@@ -93,5 +101,85 @@ class Body extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void showSuccess(String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Success!"),
+          content: Text(message),
+          actions: <Widget>[
+            new TextButton(
+              child: const Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void showError(String errorMessage) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Error!"),
+          content: Text(errorMessage),
+          actions: <Widget>[
+            new TextButton(
+              child: const Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void doUserLogin() async {
+    final username = controllerUsername.text.trim();
+    final password = controllerPassword.text.trim();
+
+    final user = ParseUser(username, password, null);
+
+    var response = await user.login();
+
+    if (response.success) {
+      setState(() {
+        isLoggedIn = true;
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              return Homepage();
+            },
+          ),
+        );
+      });
+    } else {
+      showError(response.error!.message);
+    }
+  }
+
+  void doUserLogout() async {
+    final user = await ParseUser.currentUser() as ParseUser;
+    var response = await user.logout();
+
+    if (response.success) {
+      showSuccess("User was successfully logout!");
+      setState(() {
+        isLoggedIn = false;
+      });
+    } else {
+      showError(response.error!.message);
+    }
   }
 }
