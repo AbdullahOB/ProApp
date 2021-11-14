@@ -1,3 +1,5 @@
+import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
+import 'package:pro_app/models/Admin/get_items.dart';
 import 'package:pro_app/widgets/title_text.dart';
 
 import '../../constants.dart';
@@ -41,7 +43,7 @@ Widget _item(textCenter) {
   );
 }
 
-Widget _item_recent_logs() {
+Widget _item_recent_logs(type, amount, from, to) {
   return Container(
       margin: EdgeInsets.only(bottom: 10, right: 10, left: 10),
       decoration: BoxDecoration(
@@ -74,8 +76,8 @@ Widget _item_recent_logs() {
                 fontWeight: FontWeight.w700,
               ),
               TitleText(
-                text: "Abdullah",
-                fontSize: 15,
+                text: from,
+                fontSize: 11,
                 fontWeight: FontWeight.w700,
               ),
             ],
@@ -89,8 +91,8 @@ Widget _item_recent_logs() {
                 fontWeight: FontWeight.w700,
               ),
               TitleText(
-                text: "Osid",
-                fontSize: 15,
+                text: to,
+                fontSize: 11,
                 fontWeight: FontWeight.w700,
               ),
             ],
@@ -104,7 +106,7 @@ Widget _item_recent_logs() {
                 fontWeight: FontWeight.w700,
               ),
               TitleText(
-                text: "12 coin",
+                text: amount.toString() + " coin",
                 fontSize: 15,
                 fontWeight: FontWeight.w700,
               ),
@@ -115,6 +117,24 @@ Widget _item_recent_logs() {
 }
 
 class _CoinsState extends State<Coins> {
+  var transitions = [];
+  var loadproducts = true;
+  @override
+  void initState() {
+    get_all_transitions();
+    super.initState();
+  }
+
+  Future<void> get_all_transitions() async {
+    transitions = await get_items_with_relations(
+        tableName: "transitions",
+        includeObject: ["form_user_id", "to_user_id"]);
+
+    setState(() {
+      loadproducts = transitions.length > 0 ? false : true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     MediaQueryData queryData;
@@ -136,29 +156,33 @@ class _CoinsState extends State<Coins> {
           color: Colors.black,
         ),
         Padding(padding: EdgeInsets.only(bottom: 10)),
+        _item("Sponsers"),
+        _item("Users"),
+        Padding(padding: EdgeInsets.only(top: 10, bottom: 10)),
+        TitleText(
+          text: "Recent Transetions",
+          fontSize: 12,
+          fontWeight: FontWeight.w700,
+        ),
+        Padding(padding: EdgeInsets.only(top: 10, bottom: 10)),
         Expanded(
-            child: ListView(children: [
-          _item("Sponsers"),
-          _item("Users"),
-          Padding(padding: EdgeInsets.only(top: 10, bottom: 10)),
-          TitleText(
-            text: "Recent Transetions",
-            fontSize: 12,
-            fontWeight: FontWeight.w700,
+          child: ListView.builder(
+            itemCount: transitions.length,
+            itemBuilder: (context, index) {
+              return _item_recent_logs(
+                  "send",
+                  transitions[index]["amount"],
+                  transitions[index]
+                      .get<ParseObject>('form_user_id')
+                      .get<String>('username')
+                      .toString(),
+                  transitions[index]
+                      .get<ParseObject>('to_user_id')
+                      .get<String>('username')
+                      .toString());
+            },
           ),
-          Padding(padding: EdgeInsets.only(top: 10, bottom: 10)),
-          _item_recent_logs(),
-          _item_recent_logs(),
-          _item_recent_logs(),
-          _item_recent_logs(),
-          _item_recent_logs(),
-          _item_recent_logs(),
-          _item_recent_logs(),
-          _item_recent_logs(),
-          Container(
-            height: 100,
-          )
-        ]))
+        )
       ],
     );
   }

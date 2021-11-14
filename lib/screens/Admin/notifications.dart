@@ -1,3 +1,5 @@
+import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
+import 'package:pro_app/models/Admin/get_items.dart';
 import 'package:pro_app/widgets/title_text.dart';
 
 import 'components/adminbar.dart';
@@ -11,6 +13,29 @@ class ServiceNotifications extends StatefulWidget {
 }
 
 class _ServiceNotificationsState extends State<ServiceNotifications> {
+  var orders = [];
+  var loadorders = true;
+  @override
+  void initState() {
+    get_all_orders();
+    super.initState();
+  }
+
+  Future<void> get_all_orders() async {
+    orders = await get_items_with_one_relations_many(
+        tableName: "orders",
+        includeObject: [
+          "user_id",
+          "manager_id",
+          "products",
+          "coupon",
+        ]);
+
+    setState(() {
+      loadorders = orders.length == 0 ? true : false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     MediaQueryData queryData;
@@ -33,15 +58,27 @@ class _ServiceNotificationsState extends State<ServiceNotifications> {
         ),
         Padding(padding: EdgeInsets.only(bottom: 10)),
         Expanded(
-            child: ListView(children: [
-          _requestorder(queryData),
-          _requestorder(queryData),
-          _requestorder(queryData),
-          _requestorder(queryData),
-          Container(
-            height: 100,
-          )
-        ]))
+          child: loadorders == false
+              ? ListView.builder(
+                  itemCount: orders[0].length,
+                  itemBuilder: (context, index) {
+                    return _requestorder(
+                        queryData,
+                        orders[0][index]
+                            .get<ParseObject>('user_id')
+                            .get<String>('username')
+                            .toString(),
+                        orders[0][index]
+                            .get<ParseObject>('manager_id')
+                            .get<String>('username')
+                            .toString(),
+                        orders[1][index]["q9CMoy9JfX"]);
+                  },
+                )
+              : TitleText(
+                  text: "no products",
+                ),
+        )
       ],
     );
   }
@@ -111,14 +148,16 @@ class _ServiceNotificationsState extends State<ServiceNotifications> {
     );
   }
 
-  Widget _requestorder(queryData) {
+  Widget _requestorder(queryData, user, manager, products_list) {
+    print("*************\n" +
+        products_list.length.toString() +
+        "*************\n");
     return Container(
         margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
         height: (80 * 4) + 150,
         width: queryData.size.width,
         color: Colors.white,
-        child:
-            ListView(physics: const NeverScrollableScrollPhysics(), children: [
+        child: Column(children: [
           Container(
             height: 80,
             child: Column(
@@ -134,7 +173,7 @@ class _ServiceNotificationsState extends State<ServiceNotifications> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           TitleText(
-                            text: "Osid Alsagir Order",
+                            text: user.toString(),
                             fontSize: 20,
                             fontWeight: FontWeight.w700,
                           ),
@@ -164,7 +203,7 @@ class _ServiceNotificationsState extends State<ServiceNotifications> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           TitleText(
-                            text: "Sponser : Abdullah",
+                            text: "Sponser : " + manager.toString(),
                             fontSize: 12,
                             fontWeight: FontWeight.w700,
                           ),
@@ -179,27 +218,21 @@ class _ServiceNotificationsState extends State<ServiceNotifications> {
               ],
             ),
           ),
-          FlatButton(
-            splashColor: Colors.transparent,
-            child: _item(),
-            onPressed: _showMyDialog,
-          ),
-          FlatButton(
-            splashColor: Colors.transparent,
-            child: _item(),
-            onPressed: _showMyDialog,
-          ),
-          FlatButton(
-            splashColor: Colors.transparent,
-            child: _item(),
-            onPressed: _showMyDialog,
-          ),
-          FlatButton(
-            splashColor: Colors.transparent,
-            child: _item(),
-            onPressed: _showMyDialog,
-          ),
           Padding(padding: EdgeInsets.only(top: 20)),
+          Expanded(
+            child: Container(
+              child: ListView.builder(
+                itemCount: products_list.length,
+                itemBuilder: (context, index) {
+                  return FlatButton(
+                    splashColor: Colors.transparent,
+                    child: _item(),
+                    onPressed: _showMyDialog,
+                  );
+                },
+              ),
+            ),
+          ),
           Container(
             height: 50,
             child: Row(
