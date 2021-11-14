@@ -1,3 +1,4 @@
+import 'package:pro_app/models/Admin/get_items.dart';
 import 'package:pro_app/widgets/title_text.dart';
 
 import 'components/adminbar.dart';
@@ -10,7 +11,7 @@ class Coupons extends StatefulWidget {
   _CouponsState createState() => _CouponsState();
 }
 
-Widget _item() {
+Widget _item(name, code, percentage) {
   return Container(
     height: 80,
     child: Row(
@@ -44,26 +45,67 @@ Widget _item() {
         ),
         Expanded(
             child: ListTile(
-          title: TitleText(
-            text: "Gifts",
-            fontSize: 15,
-            fontWeight: FontWeight.w700,
-          ),
-          subtitle: Row(
-            children: <Widget>[
-              TitleText(
-                text: "Manage and edit",
-                fontSize: 14,
-              ),
-            ],
-          ),
-        ))
+                title: TitleText(
+                  text: name,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w700,
+                ),
+                subtitle: Row(
+                  children: <Widget>[
+                    TitleText(
+                      text: "Manage",
+                      fontSize: 14,
+                    ),
+                    SizedBox(
+                      width: 15,
+                    ),
+                    TitleText(
+                      text: "edit",
+                      fontSize: 14,
+                    ),
+                    SizedBox(
+                      width: 15,
+                    ),
+                    TitleText(
+                      text: "view",
+                      fontSize: 14,
+                    ),
+                  ],
+                ),
+                trailing: Container(
+                  width: 35,
+                  height: 35,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      color: Colors.red.withAlpha(190),
+                      borderRadius: BorderRadius.circular(10)),
+                  child: TitleText(
+                    text: "%" + percentage.toString(),
+                    fontSize: 12,
+                    color: Colors.white,
+                  ),
+                )))
       ],
     ),
   );
 }
 
 class _CouponsState extends State<Coupons> {
+  var coupons = [];
+  var loadproducts = true;
+  @override
+  void initState() {
+    get_all_coupons();
+    super.initState();
+  }
+
+  Future<void> get_all_coupons() async {
+    coupons = await get_items(tableName: "coupons");
+    setState(() {
+      loadproducts = coupons.length > 0 ? false : true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     MediaQueryData queryData;
@@ -86,20 +128,26 @@ class _CouponsState extends State<Coupons> {
         ),
         Padding(padding: EdgeInsets.only(bottom: 10)),
         Expanded(
-            child: ListView(children: [
-          _item(),
-          _item(),
-          _item(),
-          _item(),
-          _item(),
-          _item(),
-          _item(),
-          _item(),
-          _item(),
-          Container(
-            height: 100,
-          )
-        ]))
+          child: loadproducts
+              ? ListView.builder(
+                  itemCount: 1,
+                  itemBuilder: (context, index) {
+                    return Center(
+                      child: TitleText(text: "loading products"),
+                    );
+                  },
+                )
+              : ListView.builder(
+                  itemCount: coupons.length,
+                  itemBuilder: (context, index) {
+                    return _item(coupons[index]["name"], coupons[index]["code"],
+                        coupons[index]["percentage"]);
+                  },
+                ),
+        ),
+        Container(
+          height: 100,
+        )
       ],
     );
   }

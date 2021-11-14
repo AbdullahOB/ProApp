@@ -1,3 +1,4 @@
+import 'package:pro_app/models/Admin/get_items.dart';
 import 'package:pro_app/widgets/title_text.dart';
 
 import 'components/adminbar.dart';
@@ -10,7 +11,7 @@ class Categories extends StatefulWidget {
   _CategoriesState createState() => _CategoriesState();
 }
 
-Widget _item() {
+Widget _item(name) {
   return Container(
     height: 80,
     child: Row(
@@ -45,7 +46,7 @@ Widget _item() {
         Expanded(
             child: ListTile(
                 title: TitleText(
-                  text: "Gifts",
+                  text: name,
                   fontSize: 15,
                   fontWeight: FontWeight.w700,
                 ),
@@ -76,6 +77,21 @@ Widget _item() {
 }
 
 class _CategoriesState extends State<Categories> {
+  var categories = [];
+  var loadproducts = true;
+  @override
+  void initState() {
+    get_all_coupons();
+    super.initState();
+  }
+
+  Future<void> get_all_coupons() async {
+    categories = await get_items(tableName: "categories");
+    setState(() {
+      loadproducts = categories.length > 0 ? false : true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     MediaQueryData queryData;
@@ -98,20 +114,22 @@ class _CategoriesState extends State<Categories> {
         ),
         Padding(padding: EdgeInsets.only(bottom: 10)),
         Expanded(
-            child: ListView(children: [
-          _item(),
-          _item(),
-          _item(),
-          _item(),
-          _item(),
-          _item(),
-          _item(),
-          _item(),
-          _item(),
-          Container(
-            height: 100,
-          )
-        ]))
+          child: loadproducts
+              ? ListView.builder(
+                  itemCount: 1,
+                  itemBuilder: (context, index) {
+                    return Center(
+                      child: TitleText(text: "loading products"),
+                    );
+                  },
+                )
+              : ListView.builder(
+                  itemCount: categories.length,
+                  itemBuilder: (context, index) {
+                    return _item(categories[index]["name"]);
+                  },
+                ),
+        )
       ],
     );
   }
