@@ -45,32 +45,20 @@ Widget _item(name) {
         ),
         Expanded(
             child: ListTile(
-                title: TitleText(
-                  text: name,
-                  fontSize: 15,
-                  fontWeight: FontWeight.w700,
-                ),
-                subtitle: Row(
-                  children: <Widget>[
-                    TitleText(
-                      text: "Manage and edit",
-                      fontSize: 14,
-                    ),
-                  ],
-                ),
-                trailing: Container(
-                  width: 35,
-                  height: 35,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      color: Colors.red.withAlpha(190),
-                      borderRadius: BorderRadius.circular(10)),
-                  child: TitleText(
-                    text: '20',
-                    fontSize: 12,
-                    color: Colors.white,
-                  ),
-                )))
+          title: TitleText(
+            text: name,
+            fontSize: 15,
+            fontWeight: FontWeight.w700,
+          ),
+          subtitle: Row(
+            children: <Widget>[
+              TitleText(
+                text: "Manage and edit",
+                fontSize: 14,
+              ),
+            ],
+          ),
+        ))
       ],
     ),
   );

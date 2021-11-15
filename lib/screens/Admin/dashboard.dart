@@ -12,7 +12,7 @@ class Dashboard extends StatefulWidget {
   _DashboardState createState() => _DashboardState();
 }
 
-Widget _item(name) {
+Widget _item(name, price, picture) {
   return Container(
     height: 80,
     child: Row(
@@ -30,17 +30,14 @@ Widget _item(name) {
                   child: Container(
                     decoration: BoxDecoration(
                         color: Colors.black87,
-                        borderRadius: BorderRadius.circular(10)),
+                        borderRadius: BorderRadius.circular(10),
+                        image: DecorationImage(
+                          image: NetworkImage(picture["url"].toString()),
+                          fit: BoxFit.cover,
+                        )),
                   ),
                 ),
               ),
-              Center(
-                child: Icon(
-                  Icons.card_giftcard_rounded,
-                  color: Colors.blue,
-                  size: 40,
-                ),
-              )
             ],
           ),
         ),
@@ -60,14 +57,14 @@ Widget _item(name) {
                   ],
                 ),
                 trailing: Container(
-                  width: 35,
+                  width: 80,
                   height: 35,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                       color: Colors.red.withAlpha(190),
                       borderRadius: BorderRadius.circular(10)),
                   child: TitleText(
-                    text: '20',
+                    text: price.toString() + " " + "coin",
                     fontSize: 12,
                     color: Colors.white,
                   ),
@@ -130,7 +127,8 @@ class _DashboardState extends State<Dashboard> {
                 : ListView.builder(
                     itemCount: products.length,
                     itemBuilder: (context, index) {
-                      return _item(products[index]["name"]);
+                      return _item(products[index]["name"],
+                          products[index]["price"], products[index]["picture"]);
                     },
                   ))
       ],

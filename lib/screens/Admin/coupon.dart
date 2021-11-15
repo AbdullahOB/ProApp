@@ -1,10 +1,13 @@
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pro_app/components/mainButton.dart';
+import 'package:pro_app/constants.dart';
+import 'package:pro_app/models/Admin/set_items.dart';
 import 'package:pro_app/widgets/title_text.dart';
 import 'package:pro_app/components/textField.dart';
 import 'components/adminbar.dart';
 import 'package:flutter/material.dart';
 import 'package:pro_app/components/roundedTextField.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 class Coupon extends StatefulWidget {
   const Coupon({Key? key}) : super(key: key);
@@ -14,6 +17,29 @@ class Coupon extends StatefulWidget {
 }
 
 class _CouponState extends State<Coupon> {
+  var name;
+  var code;
+  var percentage;
+  var activationDate;
+  var expirDate;
+  setName(value) {
+    setState(() {
+      name = value;
+    });
+  }
+
+  setCode(value) {
+    setState(() {
+      code = value;
+    });
+  }
+
+  setPercentage(value) {
+    setState(() {
+      percentage = value;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     MediaQueryData queryData;
@@ -46,11 +72,91 @@ class _CouponState extends State<Coupon> {
           Container(
             height: 10,
           ),
-          _item(false, "Coupon Code", "number"),
+          textfield(false, "Coupon name", "string", setName),
+          textfield(false, "Coupon Code", "string", setCode),
+          textfield(false, "percentage", "number", setPercentage),
+          Container(
+            margin: EdgeInsets.only(bottom: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Column(
+                  children: [
+                    TextButton(
+                        onPressed: () {
+                          DatePicker.showDatePicker(context,
+                              showTitleActions: true,
+                              minTime: DateTime.now(),
+                              maxTime: DateTime(2100, 6, 7), onChanged: (date) {
+                            print('change $date');
+                          }, onConfirm: (date) {
+                            print('confirm $date');
+                            setState(() {
+                              activationDate = date;
+                            });
+                          },
+                              currentTime: DateTime.now(),
+                              locale: LocaleType.en);
+                        },
+                        child: Text(
+                          'Activation date',
+                          style: TextStyle(color: kPrimaryColor),
+                        )),
+                    activationDate != null
+                        ? TitleText(
+                            fontSize: 11,
+                            text: activationDate.toString().substring(0, 10),
+                          )
+                        : SizedBox(),
+                  ],
+                ),
+                Column(
+                  children: [
+                    TextButton(
+                        onPressed: () {
+                          DatePicker.showDatePicker(context,
+                              showTitleActions: true,
+                              minTime: DateTime.now(),
+                              maxTime: DateTime(2100, 6, 7), onChanged: (date) {
+                            print('change $date');
+                          }, onConfirm: (date) {
+                            print('confirm $date');
+                            setState(() {
+                              expirDate = date;
+                            });
+                          },
+                              currentTime: DateTime.now(),
+                              locale: LocaleType.en);
+                        },
+                        child: Text(
+                          'Expiration date',
+                          style: TextStyle(color: kPrimaryColor),
+                        )),
+                    expirDate != null
+                        ? TitleText(
+                            fontSize: 11,
+                            text: expirDate.toString().substring(0, 10),
+                          )
+                        : SizedBox(),
+                  ],
+                ),
+              ],
+            ),
+          ),
           ButtonMain(
               text: "ok",
               press: () async {
-                print("dasd");
+                await set_coupons(
+                    name,
+                    code,
+                    percentage,
+                    DateTime.parse(activationDate.toString().substring(0, 10) +
+                        " " +
+                        "00:00:00"),
+                    DateTime.parse(expirDate.toString().substring(0, 10) +
+                        " " +
+                        "00:00:00"));
               }),
           Container(
             height: 100,
@@ -60,7 +166,7 @@ class _CouponState extends State<Coupon> {
     );
   }
 
-  Widget _item(with_image, hintstring, fieldtype) {
+  Widget textfield(with_image, hintstring, fieldtype, function) {
     return Container(
       height: 80,
       child: Row(
@@ -101,6 +207,7 @@ class _CouponState extends State<Coupon> {
                     ? TextInputType.number
                     : TextInputType.text,
                 onChanged: (value) {
+                  function(value);
                   return print(value);
                 },
                 decoration: InputDecoration(

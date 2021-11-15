@@ -22,7 +22,7 @@ class _ServiceNotificationsState extends State<ServiceNotifications> {
   }
 
   Future<void> get_all_orders() async {
-    orders = await get_items_with_one_relations_many(
+    orders = await get_items_with_many_relations_many(
         tableName: "orders",
         includeObject: [
           "user_id",
@@ -64,6 +64,7 @@ class _ServiceNotificationsState extends State<ServiceNotifications> {
                   itemBuilder: (context, index) {
                     return _requestorder(
                         queryData,
+                        orders[0][index]["objectId"],
                         orders[0][index]
                             .get<ParseObject>('user_id')
                             .get<String>('username')
@@ -72,7 +73,16 @@ class _ServiceNotificationsState extends State<ServiceNotifications> {
                             .get<ParseObject>('manager_id')
                             .get<String>('username')
                             .toString(),
-                        orders[1][index]["q9CMoy9JfX"]);
+                        orders[0][index]["createdAt"],
+                        orders[0][index]["status"],
+                        orders[0][index]
+                            .get<ParseObject>('coupon')
+                            .get<String>('code')
+                            .toString(),
+                        orders[0][index]["total_amount_with_coupons"],
+                        orders[0][index]["total_amount"],
+                        orders[1][index]
+                            [orders[0][index]["objectId"].toString()]);
                   },
                 )
               : TitleText(
@@ -83,7 +93,7 @@ class _ServiceNotificationsState extends State<ServiceNotifications> {
     );
   }
 
-  Widget _item() {
+  Widget _item(list) {
     return Container(
       height: 80,
       child: Row(
@@ -101,45 +111,43 @@ class _ServiceNotificationsState extends State<ServiceNotifications> {
                     child: Container(
                       decoration: BoxDecoration(
                           color: Colors.green,
-                          borderRadius: BorderRadius.circular(10)),
+                          borderRadius: BorderRadius.circular(10),
+                          image: DecorationImage(
+                            image:
+                                NetworkImage(list["picture"]["url"].toString()),
+                            fit: BoxFit.cover,
+                          )),
                     ),
                   ),
                 ),
-                Center(
-                  child: Icon(
-                    Icons.card_giftcard_rounded,
-                    color: Colors.black,
-                    size: 40,
-                  ),
-                )
               ],
             ),
           ),
           Expanded(
               child: ListTile(
                   title: TitleText(
-                    text: "Gifts",
+                    text: list["category"].get<String>('name').toString(),
                     fontSize: 15,
                     fontWeight: FontWeight.w700,
                   ),
                   subtitle: Row(
                     children: <Widget>[
                       TitleText(
-                        text: "pubg coin",
+                        text: list["name"],
                         fontSize: 14,
                       ),
                     ],
                   ),
                   trailing: Container(
-                    width: 35,
+                    width: 80,
                     height: 35,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                         color: Colors.red.withAlpha(190),
                         borderRadius: BorderRadius.circular(10)),
                     child: TitleText(
-                      text: 'x20',
-                      fontSize: 12,
+                      text: list["price"].toString() + " coin",
+                      fontSize: 11,
                       color: Colors.white,
                     ),
                   )))
@@ -148,10 +156,8 @@ class _ServiceNotificationsState extends State<ServiceNotifications> {
     );
   }
 
-  Widget _requestorder(queryData, user, manager, products_list) {
-    print("*************\n" +
-        products_list.length.toString() +
-        "*************\n");
+  Widget _requestorder(queryData, id, user, manager, date, status, coupon,
+      total_amount_with_coupons, total_amount, products_list) {
     return Container(
         margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
         height: (80 * 4) + 150,
@@ -177,23 +183,37 @@ class _ServiceNotificationsState extends State<ServiceNotifications> {
                             fontSize: 20,
                             fontWeight: FontWeight.w700,
                           ),
-                          TitleText(
-                            text: "Status : In process",
-                            fontSize: 12,
-                            fontWeight: FontWeight.w700,
-                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                                color: status.toString() == "in process"
+                                    ? Colors.orange
+                                    : status.toString() == "refused"
+                                        ? Colors.red
+                                        : Colors.green,
+                                borderRadius: BorderRadius.circular(10)),
+                            padding: EdgeInsets.all(4),
+                            margin: EdgeInsets.only(bottom: 3),
+                            child: TitleText(
+                              text: "Status : " + status.toString(),
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.white,
+                            ),
+                          )
                         ],
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           TitleText(
-                            text: "Order ID : 588czs965",
-                            fontSize: 12,
+                            text: "Order ID : " + id.toString(),
+                            fontSize: 10,
                             fontWeight: FontWeight.w700,
                           ),
                           TitleText(
-                            text: "10/02/2020",
+                            text: date.toString().split(" ")[0] +
+                                " " +
+                                date.toString().split(" ")[1].substring(0, 8),
                             fontSize: 12,
                             fontWeight: FontWeight.w700,
                           ),
@@ -209,6 +229,18 @@ class _ServiceNotificationsState extends State<ServiceNotifications> {
                           ),
                         ],
                       ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          TitleText(
+                            text: coupon.toString() == ""
+                                ? "coupon : " + "no"
+                                : "coupon : " + coupon.toString(),
+                            fontSize: 12,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                   onPressed: () => {
@@ -219,18 +251,25 @@ class _ServiceNotificationsState extends State<ServiceNotifications> {
             ),
           ),
           Padding(padding: EdgeInsets.only(top: 20)),
-          Expanded(
-            child: Container(
-              child: ListView.builder(
-                itemCount: products_list.length,
-                itemBuilder: (context, index) {
-                  return FlatButton(
-                    splashColor: Colors.transparent,
-                    child: _item(),
-                    onPressed: _showMyDialog,
-                  );
-                },
-              ),
+          for (var list in products_list) _item(list),
+          Container(
+            height: 50,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TitleText(
+                  text: "Total",
+                  fontSize: 15,
+                  fontWeight: FontWeight.w700,
+                ),
+                TitleText(
+                  text: total_amount.toString() + " coin",
+                  fontSize: 15,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.black,
+                ),
+              ],
             ),
           ),
           Container(
@@ -240,12 +279,12 @@ class _ServiceNotificationsState extends State<ServiceNotifications> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 TitleText(
-                  text: "Total",
-                  fontSize: 20,
+                  text: "Total paied",
+                  fontSize: 15,
                   fontWeight: FontWeight.w700,
                 ),
                 TitleText(
-                  text: "200TL",
+                  text: total_amount_with_coupons.toString() + " coin",
                   fontSize: 15,
                   fontWeight: FontWeight.w700,
                   color: Colors.black,
