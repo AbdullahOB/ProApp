@@ -38,10 +38,11 @@ Future<bool> update_categories(id, name) async {
 Future<bool> update_product(id, name, oldprice, price, discription, category_id,
     language, image) async {
   ParseFileBase? parseFile;
+  if (image.runtimeType.toString() != "ParseFile") {
+    parseFile = ParseFile(File(image!.path));
+    await parseFile.save();
+  }
 
-  parseFile = ParseFile(File(image!.path));
-
-  await parseFile.save();
   var parseObject = ParseObject("products")
     ..objectId = id.toString()
     ..set("name", name.toString())
@@ -52,7 +53,8 @@ Future<bool> update_product(id, name, oldprice, price, discription, category_id,
     ..set("language_code", language.toString())
     ..set("category",
         ParseObject('categories')..objectId = category_id.toString())
-    ..set("picture", parseFile);
+    ..set("picture",
+        image.runtimeType.toString() != "ParseFile" ? parseFile : image);
 
   final ParseResponse parseResponse = await parseObject.save();
 
