@@ -1,5 +1,6 @@
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pro_app/components/mainButton.dart';
+import 'package:pro_app/models/Admin/set_items.dart';
 import 'package:pro_app/widgets/title_text.dart';
 import 'package:pro_app/components/textField.dart';
 import 'components/adminbar.dart';
@@ -14,6 +15,13 @@ class Category extends StatefulWidget {
 }
 
 class _CategoryState extends State<Category> {
+  var name;
+  setName(value) {
+    setState(() {
+      name = value;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     MediaQueryData queryData;
@@ -50,7 +58,7 @@ class _CategoryState extends State<Category> {
           ButtonMain(
               text: "ok",
               press: () async {
-                print("dasd");
+                await set_category(name);
               }),
           Container(
             height: 100,
@@ -100,8 +108,8 @@ class _CategoryState extends State<Category> {
                 keyboardType: fieldtype == "number"
                     ? TextInputType.number
                     : TextInputType.text,
-                onChanged: (value) {
-                  return print(value);
+                onChanged: (value) async {
+                  await setName(value);
                 },
                 decoration: InputDecoration(
                   hintText: hintstring,

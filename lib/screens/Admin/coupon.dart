@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:pro_app/components/roundedTextField.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
+import 'components/textfield.dart';
+
 class Coupon extends StatefulWidget {
   const Coupon({Key? key}) : super(key: key);
 
@@ -147,7 +149,7 @@ class _CouponState extends State<Coupon> {
           ButtonMain(
               text: "ok",
               press: () async {
-                await set_coupons(
+                await set_coupon(
                     name,
                     code,
                     percentage,
@@ -163,62 +165,6 @@ class _CouponState extends State<Coupon> {
           )
         ]))
       ],
-    );
-  }
-
-  Widget textfield(with_image, hintstring, fieldtype, function) {
-    return Container(
-      height: 80,
-      child: Row(
-        children: <Widget>[
-          with_image
-              ? AspectRatio(
-                  aspectRatio: 1.2,
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: <Widget>[
-                      Align(
-                        alignment: Alignment.center,
-                        child: Container(
-                          height: 70,
-                          width: 70,
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: Colors.black87,
-                                borderRadius: BorderRadius.circular(10)),
-                          ),
-                        ),
-                      ),
-                      Center(
-                        child: Icon(
-                          Icons.photo,
-                          color: Colors.blue,
-                          size: 40,
-                        ),
-                      )
-                    ],
-                  ),
-                )
-              : SizedBox(),
-          Expanded(
-            child: TextInput(
-              child: TextFormField(
-                keyboardType: fieldtype == "number"
-                    ? TextInputType.number
-                    : TextInputType.text,
-                onChanged: (value) {
-                  function(value);
-                  return print(value);
-                },
-                decoration: InputDecoration(
-                  hintText: hintstring,
-                  border: InputBorder.none,
-                ),
-              ),
-            ),
-          )
-        ],
-      ),
     );
   }
 }

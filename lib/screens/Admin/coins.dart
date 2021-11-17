@@ -1,119 +1,20 @@
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:pro_app/models/Admin/get_items.dart';
+import 'package:pro_app/models/Admin/get_users.dart';
+import 'package:pro_app/models/Admin/set_items.dart';
 import 'package:pro_app/widgets/title_text.dart';
 
 import '../../constants.dart';
 import 'components/adminbar.dart';
 import 'package:flutter/material.dart';
 
+import 'components/textfield.dart';
+
 class Coins extends StatefulWidget {
   const Coins({Key? key}) : super(key: key);
 
   @override
   _CoinsState createState() => _CoinsState();
-}
-
-Widget _item(textCenter) {
-  return Container(
-    margin: EdgeInsets.only(
-      bottom: 10,
-    ),
-    decoration: BoxDecoration(
-      color: kPrimaryColor,
-      shape: BoxShape.rectangle,
-      borderRadius: BorderRadius.circular(8.0),
-      boxShadow: <BoxShadow>[
-        BoxShadow(
-          color: Colors.black12,
-          blurRadius: 10.0,
-          offset: Offset(0.0, 10.0),
-        ),
-      ],
-    ),
-    height: 100,
-    width: double.infinity,
-    child: Center(
-      child: TitleText(
-        text: textCenter,
-        fontSize: 20,
-        fontWeight: FontWeight.w700,
-        color: Colors.white,
-      ),
-    ),
-  );
-}
-
-Widget _item_recent_logs(type, amount, from, to) {
-  return Container(
-      margin: EdgeInsets.only(bottom: 10, right: 10, left: 10),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        shape: BoxShape.rectangle,
-        borderRadius: BorderRadius.circular(8.0),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-            color: Colors.black12,
-            blurRadius: 10.0,
-            offset: Offset(0.0, 10.0),
-          ),
-        ],
-      ),
-      height: 60,
-      width: double.infinity,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          Icon(
-            Icons.monetization_on_outlined,
-            color: Colors.green,
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              TitleText(
-                text: "Maneger",
-                fontSize: 10,
-                fontWeight: FontWeight.w700,
-              ),
-              TitleText(
-                text: from,
-                fontSize: 11,
-                fontWeight: FontWeight.w700,
-              ),
-            ],
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              TitleText(
-                text: "user",
-                fontSize: 10,
-                fontWeight: FontWeight.w700,
-              ),
-              TitleText(
-                text: to,
-                fontSize: 11,
-                fontWeight: FontWeight.w700,
-              ),
-            ],
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              TitleText(
-                text: "Amount",
-                fontSize: 10,
-                fontWeight: FontWeight.w700,
-              ),
-              TitleText(
-                text: amount.toString() + " coin",
-                fontSize: 15,
-                fontWeight: FontWeight.w700,
-              ),
-            ],
-          ),
-        ],
-      ));
 }
 
 class _CoinsState extends State<Coins> {
@@ -185,5 +86,244 @@ class _CoinsState extends State<Coins> {
         )
       ],
     );
+  }
+
+  Widget _item(textCenter) {
+    return TextButton(
+      onPressed: () => showDialog(
+          context: context,
+          builder: (_) {
+            return UserDialog();
+          }),
+      child: Container(
+        margin: EdgeInsets.only(
+          bottom: 10,
+        ),
+        decoration: BoxDecoration(
+          color: kPrimaryColor,
+          shape: BoxShape.rectangle,
+          borderRadius: BorderRadius.circular(8.0),
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 10.0,
+              offset: Offset(0.0, 10.0),
+            ),
+          ],
+        ),
+        height: 100,
+        width: double.infinity,
+        child: Center(
+          child: TitleText(
+            text: textCenter,
+            fontSize: 20,
+            fontWeight: FontWeight.w700,
+            color: Colors.white,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _item_recent_logs(type, amount, from, to) {
+    return Container(
+        margin: EdgeInsets.only(bottom: 10, right: 10, left: 10),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          shape: BoxShape.rectangle,
+          borderRadius: BorderRadius.circular(8.0),
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 10.0,
+              offset: Offset(0.0, 10.0),
+            ),
+          ],
+        ),
+        height: 60,
+        width: double.infinity,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Icon(
+              Icons.monetization_on_outlined,
+              color: Colors.green,
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                TitleText(
+                  text: "Maneger",
+                  fontSize: 10,
+                  fontWeight: FontWeight.w700,
+                ),
+                TitleText(
+                  text: from,
+                  fontSize: 11,
+                  fontWeight: FontWeight.w700,
+                ),
+              ],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                TitleText(
+                  text: "user",
+                  fontSize: 10,
+                  fontWeight: FontWeight.w700,
+                ),
+                TitleText(
+                  text: to,
+                  fontSize: 11,
+                  fontWeight: FontWeight.w700,
+                ),
+              ],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                TitleText(
+                  text: "Amount",
+                  fontSize: 10,
+                  fontWeight: FontWeight.w700,
+                ),
+                TitleText(
+                  text: amount.toString() + " coin",
+                  fontSize: 15,
+                  fontWeight: FontWeight.w700,
+                ),
+              ],
+            ),
+          ],
+        ));
+  }
+}
+
+class UserDialog extends StatefulWidget {
+  @override
+  _UserDialogState createState() => new _UserDialogState();
+}
+
+class _UserDialogState extends State<UserDialog> {
+  var users = [];
+  var new_user_list = [];
+  var user_id = "";
+  var user_name = "";
+  var coins;
+
+  @override
+  void initState() {
+    get_users_list();
+    super.initState();
+  }
+
+  get_users_list() async {
+    users = await get_users();
+    setState(() {
+      new_user_list = users;
+    });
+  }
+
+  setCoin(value) {
+    setState(() {
+      coins = value;
+    });
+    print(coins);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var typeing = "";
+
+    get_user_suggestions(value) {
+      setState(() {
+        typeing = value;
+        if (typeing.length >= 0) {
+          new_user_list = users
+              .where((i) => (i["username"]
+                      .toString()
+                      .toLowerCase()
+                      .contains(typeing.toLowerCase()) ||
+                  i["objectId"]
+                      .toString()
+                      .toLowerCase()
+                      .contains(typeing.toLowerCase())))
+              .toList();
+        } else {
+          new_user_list = [];
+        }
+      });
+    }
+
+    return user_id == ""
+        ? AlertDialog(
+            title: Text('AlertDialog Title'),
+            content: Container(
+              height: 250,
+              child: Column(
+                children: [
+                  textfield(
+                      false, "Email / ID", "string", get_user_suggestions),
+                  Container(
+                      width: 250,
+                      height: 150,
+                      child: ListView.builder(
+                        itemCount: new_user_list.length,
+                        itemBuilder: (context, index) {
+                          return TextButton(
+                            style: TextButton.styleFrom(
+                              primary: Colors.white,
+                              backgroundColor: Colors.transparent,
+                              shadowColor: Colors.transparent,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                user_id =
+                                    new_user_list[index]["objectId"].toString();
+                                user_name =
+                                    new_user_list[index]["username"].toString();
+                              });
+                            },
+                            child: Text(
+                              new_user_list[index]["username"],
+                              style:
+                                  TextStyle(fontSize: 15, color: Colors.black),
+                              textAlign: TextAlign.start,
+                            ),
+                          );
+                        },
+                      )),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('Approve'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          )
+        : AlertDialog(
+            title: Text('AlertDialog Title'),
+            content: Container(
+              height: 250,
+              child: Column(
+                children: [
+                  textfield(false, "Amount", "number", setCoin),
+                  Text(user_name)
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('Sent'),
+                onPressed: () async {
+                  await set_coin(user_id, coins);
+                },
+              ),
+            ],
+          );
   }
 }

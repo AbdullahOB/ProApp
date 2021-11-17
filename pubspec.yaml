@@ -41,6 +41,8 @@ dependencies:
   google_fonts: ^2.1.0
   curved_navigation_bar: ^1.0.1
   parse_server_sdk_flutter: ^3.1.0
+  awesome_select: ^5.0.5
+  image_picker: ^0.8.4+1
 
 dev_dependencies:
   flutter_test:
