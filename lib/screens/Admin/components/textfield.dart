@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pro_app/components/textField.dart';
 
-Widget textfield(bool with_image, hintstring, fieldtype, function) {
+Widget textfield(bool with_image, hintstring, fieldtype, function,
+    {value = ""}) {
   return Container(
     height: 80,
     child: Row(
@@ -38,6 +39,7 @@ Widget textfield(bool with_image, hintstring, fieldtype, function) {
         Expanded(
           child: TextInput(
             child: TextFormField(
+              initialValue: value,
               keyboardType: fieldtype == "number"
                   ? TextInputType.number
                   : TextInputType.text,

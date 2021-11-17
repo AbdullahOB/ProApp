@@ -1,12 +1,11 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:pro_app/screens/Admin/admin_profile.dart';
-import 'package:pro_app/screens/Admin/category.dart';
-import 'package:pro_app/screens/Admin/coins.dart';
+import 'package:pro_app/screens/Admin/categories/category.dart';
+import 'package:pro_app/screens/Admin/coins/coins.dart';
 import 'package:pro_app/screens/Admin/components/adminbar.dart';
 import 'package:pro_app/screens/Admin/notifications.dart';
-import 'package:pro_app/screens/Admin/service.dart';
-import 'package:pro_app/screens/Admin/servicedetails.dart';
+import 'package:pro_app/screens/Admin/products/service.dart';
 import 'package:pro_app/screens/HomePage/homepage.dart';
 import 'package:pro_app/screens/Login/LoginScreen.dart';
 import 'package:pro_app/screens/Register/registerScreen.dart';

@@ -1,17 +1,24 @@
 import 'package:pro_app/components/mainButton.dart';
+import 'package:pro_app/models/Admin/set_items.dart';
 import 'package:pro_app/widgets/title_text.dart';
 import 'package:pro_app/components/textField.dart';
-import 'components/adminbar.dart';
 import 'package:flutter/material.dart';
 
-class ServiceDetails extends StatefulWidget {
-  const ServiceDetails({Key? key}) : super(key: key);
+class Category extends StatefulWidget {
+  const Category({Key? key}) : super(key: key);
 
   @override
-  _ServiceDetailsState createState() => _ServiceDetailsState();
+  _CategoryState createState() => _CategoryState();
 }
 
-class _ServiceDetailsState extends State<ServiceDetails> {
+class _CategoryState extends State<Category> {
+  var name;
+  setName(value) {
+    setState(() {
+      name = value;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     MediaQueryData queryData;
@@ -22,7 +29,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
       children: [
         Padding(padding: EdgeInsets.only(top: 10)),
         TitleText(
-          text: "Admin Panel / Edit and Manage Service",
+          text: "Admin Panel / Add New Category",
           fontSize: 20,
           fontWeight: FontWeight.w700,
         ),
@@ -36,7 +43,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
         Expanded(
             child: ListView(children: [
           TitleText(
-            text: "Service name",
+            text: "Add New Category",
             fontSize: 14,
             fontWeight: FontWeight.w700,
             color: Colors.green,
@@ -44,19 +51,11 @@ class _ServiceDetailsState extends State<ServiceDetails> {
           Container(
             height: 10,
           ),
-          _item(true, "ServiceDetails name", "text"),
-          _item(false, "ServiceDetails old price", "number"),
-          _item(false, "ServiceDetails price", "number"),
-          _item(false, "ServiceDetails Discription", "longtext"),
+          _item(false, "Category Name", "number"),
           ButtonMain(
               text: "ok",
               press: () async {
-                print("dasd");
-              }),
-          ButtonMain(
-              text: "back",
-              press: () async {
-                print("dasd");
+                await set_category(name);
               }),
           Container(
             height: 100,
@@ -106,8 +105,8 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                 keyboardType: fieldtype == "number"
                     ? TextInputType.number
                     : TextInputType.text,
-                onChanged: (value) {
-                  return print(value);
+                onChanged: (value) async {
+                  await setName(value);
                 },
                 decoration: InputDecoration(
                   hintText: hintstring,

@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:pro_app/constants.dart';
-import 'package:pro_app/screens/Admin/categories.dart';
-import 'package:pro_app/screens/Admin/category.dart';
-import 'package:pro_app/screens/Admin/coins.dart';
-import 'package:pro_app/screens/Admin/coupon.dart';
-import 'package:pro_app/screens/Admin/coupons.dart';
+import 'package:pro_app/screens/Admin/categories/categories.dart';
+import 'package:pro_app/screens/Admin/categories/category.dart';
+import 'package:pro_app/screens/Admin/coins/coins.dart';
+import 'package:pro_app/screens/Admin/coupons/coupon.dart';
+import 'package:pro_app/screens/Admin/coupons/coupons.dart';
 import 'package:pro_app/screens/Admin/dashboard.dart';
 import 'package:pro_app/screens/Admin/notifications.dart';
-import 'package:pro_app/screens/Admin/service.dart';
-import 'package:pro_app/screens/Register/registerScreen.dart';
-import 'package:pro_app/widgets/BottomNavigationBar/bottom_navigation_bar.dart';
+import 'package:pro_app/screens/Admin/products/service.dart';
 
 import '../admin_profile.dart';
 
@@ -26,7 +23,6 @@ class _AdimnbarState extends State<Adimnbar> {
 
   @override
   Widget build(BuildContext context) {
-
     MediaQueryData queryData;
     queryData = MediaQuery.of(context);
     return Scaffold(
@@ -199,6 +195,4 @@ class _AdimnbarState extends State<Adimnbar> {
         break;
     }
   }
-
-  
 }

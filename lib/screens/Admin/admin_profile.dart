@@ -241,7 +241,7 @@ class _ProfileState extends State<Profile> {
                   "send",
                   transitions[index]["amount"],
                   transitions[index]
-                      .get<ParseObject>('form_user_id')
+                      .get<ParseObject>('from_user_id')
                       .get<String>('username')
                       .toString(),
                   transitions[index]

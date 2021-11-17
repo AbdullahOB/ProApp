@@ -1,8 +1,8 @@
-import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
+import 'package:pro_app/constants.dart';
+import 'package:pro_app/models/Admin/delete_items.dart';
 import 'package:pro_app/models/Admin/get_items.dart';
+import 'package:pro_app/screens/Admin/products/edit.dart';
 import 'package:pro_app/widgets/title_text.dart';
-
-import 'components/adminbar.dart';
 import 'package:flutter/material.dart';
 
 class Dashboard extends StatefulWidget {
@@ -10,68 +10,6 @@ class Dashboard extends StatefulWidget {
 
   @override
   _DashboardState createState() => _DashboardState();
-}
-
-Widget _item(name, price, picture) {
-  return Container(
-    height: 80,
-    child: Row(
-      children: <Widget>[
-        AspectRatio(
-          aspectRatio: 1.2,
-          child: Stack(
-            alignment: Alignment.center,
-            children: <Widget>[
-              Align(
-                alignment: Alignment.center,
-                child: Container(
-                  height: 70,
-                  width: 70,
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.black87,
-                        borderRadius: BorderRadius.circular(10),
-                        image: DecorationImage(
-                          image: NetworkImage(picture["url"].toString()),
-                          fit: BoxFit.cover,
-                        )),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        Expanded(
-            child: ListTile(
-                title: TitleText(
-                  text: name,
-                  fontSize: 15,
-                  fontWeight: FontWeight.w700,
-                ),
-                subtitle: Row(
-                  children: <Widget>[
-                    TitleText(
-                      text: "Manage and edit",
-                      fontSize: 14,
-                    ),
-                  ],
-                ),
-                trailing: Container(
-                  width: 80,
-                  height: 35,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      color: Colors.red.withAlpha(190),
-                      borderRadius: BorderRadius.circular(10)),
-                  child: TitleText(
-                    text: price.toString() + " " + "coin",
-                    fontSize: 12,
-                    color: Colors.white,
-                  ),
-                )))
-      ],
-    ),
-  );
 }
 
 class _DashboardState extends State<Dashboard> {
@@ -85,9 +23,12 @@ class _DashboardState extends State<Dashboard> {
 
   Future<void> get_all_prducts() async {
     products = await get_items(tableName: "products");
-    setState(() {
-      loadproducts = products.length > 0 ? false : true;
-    });
+
+    if (mounted) {
+      setState(() {
+        loadproducts = products.length > 0 ? false : true;
+      });
+    }
   }
 
   @override
@@ -127,11 +68,119 @@ class _DashboardState extends State<Dashboard> {
                 : ListView.builder(
                     itemCount: products.length,
                     itemBuilder: (context, index) {
-                      return _item(products[index]["name"],
-                          products[index]["price"], products[index]["picture"]);
+                      return _item(
+                          products[index]["objectId"],
+                          products[index]["name"],
+                          products[index]["old_price"],
+                          products[index]["price"],
+                          products[index]["discription"],
+                          products[index]["category"]
+                              .get<String>('objectId')
+                              .toString(),
+                          products[index]["language_code"],
+                          products[index]["picture"],
+                          context);
                     },
                   ))
       ],
+    );
+  }
+
+  Widget _item(id, name, oldprice, price, discription, selectedCategories,
+      selectedLanguages, picture, context) {
+    return Container(
+      height: 80,
+      child: Row(
+        children: <Widget>[
+          AspectRatio(
+            aspectRatio: 1.2,
+            child: Stack(
+              alignment: Alignment.center,
+              children: <Widget>[
+                Align(
+                  alignment: Alignment.center,
+                  child: Container(
+                    height: 70,
+                    width: 70,
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.black87,
+                          borderRadius: BorderRadius.circular(10),
+                          image: DecorationImage(
+                            image: NetworkImage(picture["url"].toString()),
+                            fit: BoxFit.cover,
+                          )),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+              child: ListTile(
+                  title: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      TitleText(
+                        text: name,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w700,
+                      ),
+                      Row(
+                        children: [
+                          IconButton(
+                            icon: Icon(
+                              Icons.edit,
+                              color: kPrimaryColor,
+                            ),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => EditService(
+                                          id: id,
+                                          name: name,
+                                          oldprice: oldprice,
+                                          price: price,
+                                          discription: discription,
+                                          selectedCategories:
+                                              selectedCategories,
+                                          selectedLanguages: selectedLanguages,
+                                          imageFile: picture,
+                                        )),
+                              );
+                            },
+                          ),
+                          IconButton(
+                              icon: Icon(
+                                Icons.delete,
+                                color: Colors.red,
+                              ),
+                              onPressed: () async {
+                                await delete_item(id, "products");
+                                await get_all_prducts();
+                              }),
+                        ],
+                      )
+                    ],
+                  ),
+                  trailing: Container(
+                    width: 80,
+                    height: 35,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        color: Colors.red.withAlpha(190),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Center(
+                      child: TitleText(
+                        text: price.toString() + " " + "coin",
+                        fontSize: 12,
+                        color: Colors.white,
+                      ),
+                    ),
+                  )))
+        ],
+      ),
     );
   }
 }

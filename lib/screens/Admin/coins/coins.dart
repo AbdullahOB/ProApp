@@ -4,11 +4,11 @@ import 'package:pro_app/models/Admin/get_users.dart';
 import 'package:pro_app/models/Admin/set_items.dart';
 import 'package:pro_app/widgets/title_text.dart';
 
-import '../../constants.dart';
-import 'components/adminbar.dart';
+import '../../../constants.dart';
+import '../components/adminbar.dart';
 import 'package:flutter/material.dart';
 
-import 'components/textfield.dart';
+import '../components/textfield.dart';
 
 class Coins extends StatefulWidget {
   const Coins({Key? key}) : super(key: key);
@@ -29,7 +29,7 @@ class _CoinsState extends State<Coins> {
   Future<void> get_all_transitions() async {
     transitions = await get_items_with_relations(
         tableName: "transitions",
-        includeObject: ["form_user_id", "to_user_id"]);
+        includeObject: ["from_user_id", "to_user_id"]);
 
     setState(() {
       loadproducts = transitions.length > 0 ? false : true;
@@ -74,7 +74,7 @@ class _CoinsState extends State<Coins> {
                   "send",
                   transitions[index]["amount"],
                   transitions[index]
-                      .get<ParseObject>('form_user_id')
+                      .get<ParseObject>('from_user_id')
                       .get<String>('username')
                       .toString(),
                   transitions[index]
@@ -158,7 +158,7 @@ class _CoinsState extends State<Coins> {
                   fontWeight: FontWeight.w700,
                 ),
                 TitleText(
-                  text: from,
+                  text: from.toString().split("@")[0],
                   fontSize: 11,
                   fontWeight: FontWeight.w700,
                 ),
@@ -173,7 +173,7 @@ class _CoinsState extends State<Coins> {
                   fontWeight: FontWeight.w700,
                 ),
                 TitleText(
-                  text: to,
+                  text: to.toString().split("@")[0],
                   fontSize: 11,
                   fontWeight: FontWeight.w700,
                 ),

@@ -1,7 +1,7 @@
+import 'package:pro_app/constants.dart';
 import 'package:pro_app/models/Admin/get_items.dart';
+import 'package:pro_app/screens/Admin/categories/edit.dart';
 import 'package:pro_app/widgets/title_text.dart';
-
-import 'components/adminbar.dart';
 import 'package:flutter/material.dart';
 
 class Categories extends StatefulWidget {
@@ -11,7 +11,7 @@ class Categories extends StatefulWidget {
   _CategoriesState createState() => _CategoriesState();
 }
 
-Widget _item(name) {
+Widget _item(name, id, context) {
   return Container(
     height: 80,
     child: Row(
@@ -53,10 +53,26 @@ Widget _item(name) {
           subtitle: Row(
             children: <Widget>[
               TitleText(
-                text: "Manage and edit",
+                text: "count",
                 fontSize: 14,
               ),
             ],
+          ),
+          trailing: IconButton(
+            icon: Icon(
+              Icons.edit,
+              color: kPrimaryColor,
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => EditCategory(
+                          name: name,
+                          id: id,
+                        )),
+              );
+            },
           ),
         ))
       ],
@@ -114,7 +130,8 @@ class _CategoriesState extends State<Categories> {
               : ListView.builder(
                   itemCount: categories.length,
                   itemBuilder: (context, index) {
-                    return _item(categories[index]["name"]);
+                    return _item(categories[index]["name"],
+                        categories[index]["objectId"], context);
                   },
                 ),
         )

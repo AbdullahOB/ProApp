@@ -2,7 +2,8 @@ import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
 Future<List<ParseObject>> get_items({required tableName}) async {
   QueryBuilder<ParseObject> queryTodo =
-      QueryBuilder<ParseObject>(ParseObject(tableName));
+      QueryBuilder<ParseObject>(ParseObject(tableName))
+        ..whereEqualTo("activated", true);
   final ParseResponse apiResponse = await queryTodo.query();
 
   if (apiResponse.success && apiResponse.results != null) {
