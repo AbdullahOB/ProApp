@@ -19,6 +19,8 @@ class EditService extends StatefulWidget {
   final discription;
   final selectedCategories;
   final selectedLanguages;
+  final selectedTags;
+
   final imageFile;
   const EditService(
       {Key? key,
@@ -29,6 +31,7 @@ class EditService extends StatefulWidget {
       this.discription,
       this.selectedCategories,
       this.selectedLanguages,
+      this.selectedTags,
       this.imageFile})
       : super(key: key);
 
@@ -41,6 +44,7 @@ class EditService extends StatefulWidget {
       discription: this.discription,
       selectedCategories: this.selectedCategories,
       selectedLanguages: this.selectedLanguages,
+      selectedTags: this.selectedTags,
       imageFile: this.imageFile);
 }
 
@@ -48,6 +52,7 @@ class _EditServiceState extends State<EditService> {
   var imageFile;
   var selectedLanguages;
   var selectedCategories;
+  var selectedTags;
   var name;
   var price;
   var oldprice;
@@ -61,6 +66,7 @@ class _EditServiceState extends State<EditService> {
       this.discription,
       this.selectedCategories,
       this.selectedLanguages,
+      this.selectedTags,
       this.imageFile});
 
   var loadcategories = true;
@@ -176,6 +182,7 @@ class _EditServiceState extends State<EditService> {
                         ? Text("there is no categories to choose from")
                         : dropDownCostum(queryData, "Category"),
                     dropDownCostum(queryData, "Language"),
+                    dropDownCostum(queryData, "Tags"),
                   ],
                 ),
                 ButtonMain(
@@ -189,6 +196,7 @@ class _EditServiceState extends State<EditService> {
                           discription,
                           selectedCategories,
                           selectedLanguages,
+                          selectedTags,
                           imageFile);
                     }),
                 Container(
@@ -207,20 +215,36 @@ class _EditServiceState extends State<EditService> {
     S2Choice<dynamic>(value: "tr", title: 'Turkish'),
     S2Choice<dynamic>(value: "ar", title: 'Arabic'),
   ];
+  var tags = <S2Choice<dynamic>>[
+    S2Choice<dynamic>(value: "no", title: 'no'),
+    S2Choice<dynamic>(value: "pubg", title: 'pubg'),
+    S2Choice<dynamic>(value: "freefire", title: 'freefire'),
+    S2Choice<dynamic>(value: "likee", title: 'likee'),
+    S2Choice<dynamic>(value: "bigo", title: 'bigo'),
+  ];
 
   dropDownCostum(queryData, name) {
     return SmartSelect<dynamic>.single(
       selectedChoice: name == "Language"
           ? languages.firstWhere((element) =>
               element.value.toString() == selectedLanguages.toString())
-          : categoriesChoice.firstWhere((element) =>
-              element.value.toString() == selectedCategories.toString()),
-      choiceItems: name == "Language" ? languages : categoriesChoice,
+          : name == "Tags"
+              ? tags.firstWhere((element) =>
+                  element.value.toString() == selectedTags.toString())
+              : categoriesChoice.firstWhere((element) =>
+                  element.value.toString() == selectedCategories.toString()),
+      choiceItems: name == "Language"
+          ? languages
+          : name == "Tags"
+              ? tags
+              : categoriesChoice,
       onChange: (value) {
         setState(() {
           name == "Language"
               ? selectedLanguages = value.value.toString()
-              : selectedCategories = value.value.toString();
+              : name == "Tags"
+                  ? selectedTags = value.value.toString()
+                  : selectedCategories = value.value.toString();
         });
       },
       modalType: S2ModalType.bottomSheet,

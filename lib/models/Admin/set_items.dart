@@ -30,8 +30,8 @@ Future<bool> set_category(name) async {
   }
 }
 
-Future<bool> set_product(
-    name, oldprice, price, discription, category_id, language, image) async {
+Future<bool> set_product(name, oldprice, price, discription, category_id,
+    language, tag, image) async {
   ParseFileBase? parseFile;
 
   parseFile = ParseFile(File(image!.path));
@@ -43,6 +43,7 @@ Future<bool> set_product(
     ..set("price", int.parse(price))
     ..set("discription", discription.toString())
     ..set("language_code", language.toString())
+    ..set("tag", tag.toString())
     ..set("category",
         ParseObject('categories')..objectId = category_id.toString())
     ..set("picture", parseFile);

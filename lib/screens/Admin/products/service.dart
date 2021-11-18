@@ -23,6 +23,7 @@ class _ServiceState extends State<Service> {
 
   var imageFile;
   var selectedLanguages;
+  var selectedTags;
   var selectedCategories;
   var name;
   var price;
@@ -133,6 +134,7 @@ class _ServiceState extends State<Service> {
                   ? Text("there is no categories to choose from")
                   : dropDownCostum(queryData, "Category"),
               dropDownCostum(queryData, "Language"),
+              dropDownCostum(queryData, "Tags"),
             ],
           ),
           ButtonMain(
@@ -145,6 +147,7 @@ class _ServiceState extends State<Service> {
                     discription,
                     selectedCategories.value,
                     selectedLanguages.value,
+                    selectedTags.value,
                     imageFile);
               }),
           Container(
@@ -160,16 +163,33 @@ class _ServiceState extends State<Service> {
     S2Choice<dynamic>(value: "tr", title: 'Turkish'),
     S2Choice<dynamic>(value: "ar", title: 'Arabic'),
   ];
+  var tags = <S2Choice<dynamic>>[
+    S2Choice<dynamic>(value: "no", title: 'no'),
+    S2Choice<dynamic>(value: "pubg", title: 'pubg'),
+    S2Choice<dynamic>(value: "freefire", title: 'freefire'),
+    S2Choice<dynamic>(value: "likee", title: 'likee'),
+    S2Choice<dynamic>(value: "bigo", title: 'bigo'),
+  ];
 
   dropDownCostum(queryData, name) {
     return SmartSelect<dynamic>.single(
-      selectedChoice: name == "Language" ? languages[0] : categoriesChoice[0],
-      choiceItems: name == "Language" ? languages : categoriesChoice,
+      selectedChoice: name == "Language"
+          ? languages[0]
+          : name == "Tags"
+              ? tags[0]
+              : categoriesChoice[0],
+      choiceItems: name == "Language"
+          ? languages
+          : name == "Tags"
+              ? tags
+              : categoriesChoice,
       onChange: (value) {
         setState(() {
           name == "Language"
               ? selectedLanguages = value
-              : selectedCategories = value;
+              : name == "Tags"
+                  ? selectedTags = value
+                  : selectedCategories = value;
         });
       },
       modalType: S2ModalType.bottomSheet,

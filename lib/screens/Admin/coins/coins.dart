@@ -20,10 +20,25 @@ class Coins extends StatefulWidget {
 class _CoinsState extends State<Coins> {
   var transitions = [];
   var loadproducts = true;
+  var role = "u";
+  var current_user_email = "";
+  var current_user_id = "";
+
   @override
   void initState() {
     get_all_transitions();
+    get_role();
     super.initState();
+  }
+
+  get_role() async {
+    var currentuser = await ParseUser.currentUser();
+
+    setState(() {
+      role = currentuser["role"];
+      current_user_id = currentuser["objectId"];
+      current_user_email = currentuser["email"];
+    });
   }
 
   Future<void> get_all_transitions() async {
@@ -57,8 +72,7 @@ class _CoinsState extends State<Coins> {
           color: Colors.black,
         ),
         Padding(padding: EdgeInsets.only(bottom: 10)),
-        _item("Sponsers"),
-        _item("Users"),
+        _item("Send coins"),
         Padding(padding: EdgeInsets.only(top: 10, bottom: 10)),
         TitleText(
           text: "Recent Transetions",
@@ -127,6 +141,7 @@ class _CoinsState extends State<Coins> {
 
   Widget _item_recent_logs(type, amount, from, to) {
     return Container(
+        padding: EdgeInsets.all(8),
         margin: EdgeInsets.only(bottom: 10, right: 10, left: 10),
         decoration: BoxDecoration(
           color: Colors.white,
@@ -143,7 +158,7 @@ class _CoinsState extends State<Coins> {
         height: 60,
         width: double.infinity,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Icon(
               Icons.monetization_on_outlined,
@@ -153,7 +168,7 @@ class _CoinsState extends State<Coins> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 TitleText(
-                  text: "Maneger",
+                  text: "Manager",
                   fontSize: 10,
                   fontWeight: FontWeight.w700,
                 ),

@@ -78,6 +78,7 @@ class _DashboardState extends State<Dashboard> {
                               .get<String>('objectId')
                               .toString(),
                           products[index]["language_code"],
+                          products[index]["tag"],
                           products[index]["picture"],
                           context);
                     },
@@ -87,7 +88,7 @@ class _DashboardState extends State<Dashboard> {
   }
 
   Widget _item(id, name, oldprice, price, discription, selectedCategories,
-      selectedLanguages, picture, context) {
+      selectedLanguages, selectedTags, picture, context) {
     return Container(
       height: 80,
       child: Row(
@@ -121,10 +122,13 @@ class _DashboardState extends State<Dashboard> {
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      TitleText(
-                        text: name,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w700,
+                      Container(
+                        width: 50,
+                        child: TitleText(
+                          text: name,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                       Row(
                         children: [
@@ -146,6 +150,7 @@ class _DashboardState extends State<Dashboard> {
                                           selectedCategories:
                                               selectedCategories,
                                           selectedLanguages: selectedLanguages,
+                                          selectedTags: selectedTags,
                                           imageFile: picture,
                                         )),
                               );

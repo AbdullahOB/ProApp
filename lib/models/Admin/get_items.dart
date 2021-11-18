@@ -53,3 +53,47 @@ Future<List<dynamic>> get_items_with_many_relations_many(
     return [];
   }
 }
+
+Future<List<ParseObject>> get_transitions_for_current_user() async {
+  var user = await ParseUser.forQuery()
+      .getObject((await ParseUser.currentUser())["objectId"].toString());
+
+  final QueryBuilder<ParseObject> query1 =
+      QueryBuilder<ParseObject>(ParseObject('transitions'));
+  query1.whereEqualTo("from_user_id", user.result);
+
+  final QueryBuilder<ParseObject> query2 =
+      QueryBuilder<ParseObject>(ParseObject('transitions'));
+  query2.whereLessThan('to_user_id', user.result);
+
+  QueryBuilder<ParseObject> mainQuery = QueryBuilder.or(
+    ParseObject("transitions"),
+    [query1, query2],
+  )..includeObject(["form_user_id", "to_user_id"]);
+
+  final ParseResponse apiResponse = await mainQuery.query();
+
+  if (apiResponse.success && apiResponse.results != null) {
+    return apiResponse.results as List<ParseObject>;
+  } else {
+    return [];
+  }
+}
+
+Future<List<ParseObject>> get_coins_for_current_user() async {
+  var user = await ParseUser.forQuery()
+      .getObject((await ParseUser.currentUser())["objectId"].toString());
+
+  QueryBuilder<ParseObject> query =
+      QueryBuilder<ParseObject>(ParseObject("coins"))
+        ..whereEqualTo("user_id", user.result)
+        ..includeObject(["user_id"]);
+
+  final ParseResponse apiResponse = await query.query();
+
+  if (apiResponse.success && apiResponse.results != null) {
+    return apiResponse.results as List<ParseObject>;
+  } else {
+    return [];
+  }
+}

@@ -36,7 +36,7 @@ Future<bool> update_categories(id, name) async {
 }
 
 Future<bool> update_product(id, name, oldprice, price, discription, category_id,
-    language, image) async {
+    language, tag, image) async {
   ParseFileBase? parseFile;
   if (image.runtimeType.toString() != "ParseFile") {
     parseFile = ParseFile(File(image!.path));
@@ -51,6 +51,7 @@ Future<bool> update_product(id, name, oldprice, price, discription, category_id,
     ..set("price", int.parse(price.toString()))
     ..set("discription", discription.toString())
     ..set("language_code", language.toString())
+    ..set("tag", tag.toString())
     ..set("category",
         ParseObject('categories')..objectId = category_id.toString())
     ..set("picture",
