@@ -32,3 +32,21 @@ Future<List<ParseObject>> get_favourite_with_relations() async {
     return [];
   }
 }
+
+Future<bool> get_coupon(code) async {
+  QueryBuilder<ParseObject> queryTodo =
+      QueryBuilder<ParseObject>(ParseObject("coupons"))
+        ..whereEqualTo("activated", true)
+        ..whereEqualTo("code", code)
+        ..whereLessThanOrEqualTo("from", new DateTime.now())
+        ..whereGreaterThanOrEqualsTo("to", new DateTime.now())
+        ..first();
+
+  final ParseResponse parseResponse = await queryTodo.query();
+  ;
+  if (parseResponse.success) {
+    return true;
+  } else {
+    return false;
+  }
+}

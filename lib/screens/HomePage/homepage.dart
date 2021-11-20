@@ -6,9 +6,10 @@ import 'package:pro_app/models/User/delete_items.dart';
 import 'package:pro_app/models/User/get_items.dart';
 import 'package:pro_app/models/User/set_items.dart';
 import 'package:pro_app/screens/Favourite/favourite.dart';
+import 'package:pro_app/screens/Order/order.dart';
 import 'package:pro_app/widgets/title_text.dart';
 import '../../constants.dart';
-import 'components/adminbar.dart';
+import 'components/userbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 
@@ -68,9 +69,7 @@ class _HomepageState extends State<Homepage> {
           products: products.where((element) =>
               element["category"]["objectId"] ==
               product["category"]["objectId"]),
-          favourite: favourite,
           current_user_id: current_user_id,
-          get_favourite_function: get_favourite(),
         ));
       }
     }
@@ -264,43 +263,41 @@ class _HomepageState extends State<Homepage> {
 
 class SliderProducts extends StatefulWidget {
   final products;
-  final favourite;
-  final get_favourite_function;
+
   final current_user_id;
 
-  const SliderProducts(
-      {Key? key,
-      this.products,
-      this.favourite,
-      this.get_favourite_function,
-      this.current_user_id})
+  const SliderProducts({Key? key, this.products, this.current_user_id})
       : super(key: key);
 
   @override
   _SliderProductsState createState() => _SliderProductsState(
-      products_cat: products,
-      favourite: favourite,
-      get_favourite: get_favourite_function,
-      current_user_id: current_user_id);
+      products_cat: products, current_user_id: current_user_id);
 }
 
 class _SliderProductsState extends State<SliderProducts> {
   var products_cat;
-  var favourite;
-  var get_favourite;
+  List<ParseObject> newfav = [];
+  List<ParseObject> favourite = [];
   var current_user_id;
-  _SliderProductsState(
-      {this.products_cat,
-      this.favourite,
-      this.get_favourite,
-      this.current_user_id});
+  bool handelpress = true;
+
+  _SliderProductsState({this.products_cat, this.current_user_id});
+  @override
+  void initState() {
+    get_fav();
+    super.initState();
+  }
+
+  Future<List<ParseObject>> get_favourite() async {
+    return await get_favourite_with_relations();
+  }
 
   get_fav() async {
-    favourite = await get_favourite;
-    print(favourite);
+    List<ParseObject> favourite = await get_favourite();
+
     setState(() {
-      favourite;
-      products_cat;
+      newfav = favourite;
+      favourite = newfav;
     });
   }
 
@@ -308,198 +305,272 @@ class _SliderProductsState extends State<SliderProducts> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 310,
+      height: 286,
       color: Colors.white,
       child: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: products_cat.length + 1,
           itemBuilder: (BuildContext ctxt, int index) {
             return index != products_cat.length
-                ? Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        height: 180,
-                        width: 180,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(8),
-                              topLeft: Radius.circular(8)),
-                          color: Colors.green,
-                          shape: BoxShape.rectangle,
-                          boxShadow: <BoxShadow>[
-                            BoxShadow(
-                              color: Colors.grey,
-                              spreadRadius: 0.0,
-                              blurRadius: 5.0,
-                              offset: Offset(0.0, 3.0),
-                            ),
-                          ],
-                        ),
-                        margin: EdgeInsets.only(left: 5, right: 10),
-                        child: Center(
-                          child: Stack(
-                            alignment: Alignment.topRight,
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.only(
-                                      topRight: Radius.circular(8),
-                                      topLeft: Radius.circular(8)),
-                                  color: Colors.white,
-                                  image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: NetworkImage(
-                                        products_cat
-                                            .elementAt(index)["picture"]["url"]
-                                            .toString(),
-                                      )),
-                                  shape: BoxShape.rectangle,
-                                ),
+                ? TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Order(
+                                  products: products_cat.elementAt(index),
+                                )),
+                      );
+                    },
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          height: 180,
+                          width: 180,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(8),
+                                topLeft: Radius.circular(8)),
+                            color: Colors.green,
+                            shape: BoxShape.rectangle,
+                            boxShadow: <BoxShadow>[
+                              BoxShadow(
+                                color: Colors.grey,
+                                spreadRadius: 0.0,
+                                blurRadius: 5.0,
+                                offset: Offset(0.0, 3.0),
                               ),
-                              Container(
-                                margin: EdgeInsets.fromLTRB(0, 1, 15, 0),
-                                height: 25,
-                                width: 25,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(0.8),
-                                  color: Colors.transparent,
-                                  shape: BoxShape.rectangle,
+                            ],
+                          ),
+                          margin: EdgeInsets.only(left: 5, right: 10),
+                          child: Center(
+                            child: Stack(
+                              alignment: Alignment.topRight,
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.only(
+                                        topRight: Radius.circular(8),
+                                        topLeft: Radius.circular(8)),
+                                    color: Colors.white,
+                                    image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: NetworkImage(
+                                          products_cat
+                                              .elementAt(index)["picture"]
+                                                  ["url"]
+                                              .toString(),
+                                        )),
+                                    shape: BoxShape.rectangle,
+                                  ),
                                 ),
-                                child: favourite.indexWhere((element) =>
-                                            element["product_id"]["objectId"] ==
-                                            products_cat.elementAt(
-                                                index)["objectId"]) !=
-                                        -1
-                                    ? IconButton(
-                                        icon: Icon(
-                                          Icons.favorite,
-                                          color: Colors.red,
-                                        ),
-                                        onPressed: () async {
-                                          await delete_item(
-                                              favourite.firstWhere((element) =>
+                                Container(
+                                  margin: EdgeInsets.fromLTRB(0, 1, 15, 0),
+                                  height: 25,
+                                  width: 25,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(0.8),
+                                    color: Colors.transparent,
+                                    shape: BoxShape.rectangle,
+                                  ),
+                                  child: newfav != []
+                                      ? newfav.indexWhere((element) =>
                                                   element["product_id"]
                                                       .get<String>('objectId')
                                                       .toString() ==
-                                                  products_cat.elementAt(index)[
-                                                      "objectId"])["objectId"],
-                                              "favourite");
-                                          await get_fav();
-                                        },
-                                      )
-                                    : IconButton(
-                                        icon: Icon(
-                                          Icons.favorite_border,
-                                          color: Colors.red,
+                                                  products_cat.elementAt(
+                                                      index)["objectId"]) !=
+                                              -1
+                                          ? IconButton(
+                                              icon: Icon(
+                                                Icons.favorite,
+                                                color: Colors.red,
+                                              ),
+                                              onPressed: () async {
+                                                if (handelpress) {
+                                                  setState(() {
+                                                    handelpress = false;
+                                                  });
+                                                  var fav_index = newfav
+                                                      .indexWhere((element) =>
+                                                          element["product_id"]
+                                                              .get<String>(
+                                                                  'objectId')
+                                                              .toString() ==
+                                                          products_cat
+                                                                  .elementAt(
+                                                                      index)[
+                                                              "objectId"]);
+                                                  var objid = newfav.elementAt(
+                                                      fav_index)["objectId"];
+                                                  setState(() {
+                                                    newfav.removeAt(fav_index);
+                                                  });
+
+                                                  await delete_item(
+                                                      objid, "favourite");
+                                                  await get_fav();
+                                                  setState(() {
+                                                    handelpress = true;
+                                                  });
+                                                }
+                                              },
+                                            )
+                                          : IconButton(
+                                              icon: Icon(
+                                                Icons.favorite_border,
+                                                color: Colors.red,
+                                              ),
+                                              onPressed: () async {
+                                                if (handelpress) {
+                                                  setState(() {
+                                                    handelpress = false;
+                                                  });
+                                                  await set_favourite(
+                                                      products_cat
+                                                          .elementAt(
+                                                              index)["objectId"]
+                                                          .toString(),
+                                                      current_user_id);
+                                                  await get_fav();
+                                                  setState(() {
+                                                    handelpress = true;
+                                                  });
+                                                }
+                                              },
+                                            )
+                                      : IconButton(
+                                          icon: Icon(
+                                            Icons.favorite_border,
+                                            color: Colors.red,
+                                          ),
+                                          onPressed: () async {
+                                            if (handelpress) {
+                                              setState(() {
+                                                handelpress = false;
+                                              });
+                                              await set_favourite(
+                                                  products_cat
+                                                      .elementAt(
+                                                          index)["objectId"]
+                                                      .toString(),
+                                                  current_user_id);
+                                              await get_fav();
+                                              setState(() {
+                                                handelpress = true;
+                                              });
+                                            }
+                                          },
                                         ),
-                                        onPressed: () async {
-                                          await set_favourite(
-                                              products_cat
-                                                  .elementAt(index)["objectId"]
-                                                  .toString(),
-                                              current_user_id);
-                                          await get_fav();
-                                        },
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        Container(
+                          height: 90,
+                          width: 180,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(8),
+                                bottomRight: Radius.circular(8)),
+                            color: Colors.white,
+                            shape: BoxShape.rectangle,
+                            boxShadow: <BoxShadow>[
+                              BoxShadow(
+                                color: Colors.grey,
+                                spreadRadius: 0.0,
+                                blurRadius: 5.0,
+                                offset: Offset(0.0, 3.0),
+                              ),
+                            ],
+                          ),
+                          margin: EdgeInsets.only(left: 5, right: 10),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.only(top: 5),
+                                      child: Align(
+                                          alignment: Alignment.center,
+                                          child: TitleText(
+                                            textalign: TextAlign.center,
+                                            text: products_cat
+                                                .elementAt(index)["name"]
+                                                .toString(),
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w700,
+                                            color: Colors.black,
+                                          )),
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.all(4),
+                                      child: Center(
+                                        child: Text.rich(
+                                          TextSpan(
+                                            children: <TextSpan>[
+                                              TextSpan(
+                                                text: products_cat
+                                                        .elementAt(
+                                                            index)["old_price"]
+                                                        .toString() +
+                                                    " coin\n",
+                                                style: new TextStyle(
+                                                  color: Colors.grey,
+                                                  decoration: TextDecoration
+                                                      .lineThrough,
+                                                ),
+                                              ),
+                                              TextSpan(
+                                                style: TextStyle(
+                                                    color: kPrimaryColor),
+                                                text: products_cat
+                                                        .elementAt(
+                                                            index)["price"]
+                                                        .toString() +
+                                                    " coin",
+                                              ),
+                                            ],
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
                                       ),
-                              )
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  IconButton(
+                                      icon: Icon(
+                                        Icons.shopping_cart_outlined,
+                                        color: kPrimaryColor,
+                                      ),
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => Order(
+                                                    products: products_cat
+                                                        .elementAt(index),
+                                                  )),
+                                        );
+                                      }),
+                                ],
+                              ),
                             ],
                           ),
                         ),
-                      ),
-                      Container(
-                        height: 120,
-                        width: 180,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(8),
-                              bottomRight: Radius.circular(8)),
-                          color: Colors.white,
-                          shape: BoxShape.rectangle,
-                          boxShadow: <BoxShadow>[
-                            BoxShadow(
-                              color: Colors.grey,
-                              spreadRadius: 0.0,
-                              blurRadius: 5.0,
-                              offset: Offset(0.0, 3.0),
-                            ),
-                          ],
-                        ),
-                        margin: EdgeInsets.only(left: 5, right: 10),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    child: Align(
-                                        alignment: Alignment.center,
-                                        child: TitleText(
-                                          textalign: TextAlign.center,
-                                          text: products_cat
-                                              .elementAt(index)["name"]
-                                              .toString(),
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w700,
-                                          color: Colors.black,
-                                        )),
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.all(4),
-                                    child: Center(
-                                      child: Text.rich(
-                                        TextSpan(
-                                          children: <TextSpan>[
-                                            TextSpan(
-                                              text: products_cat
-                                                      .elementAt(
-                                                          index)["old_price"]
-                                                      .toString() +
-                                                  " coin\n",
-                                              style: new TextStyle(
-                                                color: Colors.grey,
-                                                decoration:
-                                                    TextDecoration.lineThrough,
-                                              ),
-                                            ),
-                                            TextSpan(
-                                              style: TextStyle(
-                                                  color: kPrimaryColor),
-                                              text: products_cat
-                                                      .elementAt(index)["price"]
-                                                      .toString() +
-                                                  " coin",
-                                            ),
-                                          ],
-                                        ),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ),
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      Icon(
-                                        Icons.add_shopping_cart_outlined,
-                                        color: Colors.black,
-                                      ),
-                                      Icon(
-                                        Icons.flash_on_rounded,
-                                        color: kPrimaryColor,
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   )
                 : Container(
                     margin: EdgeInsets.only(left: 10, right: 10),

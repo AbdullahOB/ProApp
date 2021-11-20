@@ -31,7 +31,10 @@ class _BodyState extends State<Body> {
   }
 
   get_role() async {
-    role = (await ParseUser.currentUser())["role"];
+    try {
+      role = (await ParseUser.currentUser())["role"];
+    } on Exception catch (_) {}
+
     setState(() {
       role;
     });
