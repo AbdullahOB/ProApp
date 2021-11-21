@@ -39,105 +39,99 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     MediaQueryData queryData;
     queryData = MediaQuery.of(context);
-    return SafeArea(
-      child: Material(
-        child: Container(
-          child: ListView(
-            children: <Widget>[
-              ListTile(
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return editUserProfile();
-                    },
-                  ),
+    return ListView(
+      children: <Widget>[
+        ListTile(
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return editUserProfile();
+              },
+            ),
+          ),
+          leading: Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: const <Widget>[
+                Text(
+                  "Abdullah Obaid",
+                  style: TextStyle(
+                      color: Colors.black87,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600),
                 ),
-                leading: Container(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const <Widget>[
-                      Text(
-                        "Abdullah Obaid",
-                        style: TextStyle(
-                            color: Colors.black87,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        "abdullahobeid@gmail.com",
-                        style: TextStyle(
-                            color: Colors.black54,
-                            fontSize: 13,
-                            fontStyle: FontStyle.normal),
-                      ),
-                    ],
-                  ),
+                SizedBox(
+                  height: 5,
                 ),
-                trailing: Icon(
-                  Icons.edit_outlined,
-                  size: 20,
-                  color: kPrimaryColor,
+                Text(
+                  "abdullahobeid@gmail.com",
+                  style: TextStyle(
+                      color: Colors.black54,
+                      fontSize: 13,
+                      fontStyle: FontStyle.normal),
                 ),
-              ),
-              ListTile(
-                leading: RadiantGradientMask(
-                    child: Icon(
-                  Icons.shopping_bag,
-                  size: 40,
-                  color: Colors.white,
-                )),
-                title: Text('Your Orders'),
-                trailing: Icon(
-                  Icons.arrow_forward_ios,
-                  color: kPrimaryColor,
-                  size: 20,
-                ),
-              ),
-              ListTile(
-                leading: RadiantGradientMask(
-                    child: Icon(
-                  Icons.favorite,
-                  size: 40,
-                  color: Colors.white,
-                )),
-                title: Text('Fav'),
-                trailing: Icon(
-                  Icons.arrow_forward_ios,
-                  color: kPrimaryColor,
-                  size: 20,
-                ),
-              ),
-              ListTile(
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return userNotifications();
-                    },
-                  ),
-                ),
-                leading: RadiantGradientMask(
-                    child: Icon(
-                  Icons.notifications,
-                  size: 40,
-                  color: Colors.white,
-                )),
-                title: Text('Notifications'),
-                trailing: Icon(
-                  Icons.arrow_forward_ios,
-                  color: kPrimaryColor,
-                  size: 20,
-                ),
-              ),
-            ],
+              ],
+            ),
+          ),
+          trailing: Icon(
+            Icons.edit_outlined,
+            size: 20,
+            color: kPrimaryColor,
           ),
         ),
-      ),
+        ListTile(
+          leading: RadiantGradientMask(
+              child: Icon(
+            Icons.shopping_bag,
+            size: 40,
+            color: Colors.white,
+          )),
+          title: Text('Your Orders'),
+          trailing: Icon(
+            Icons.arrow_forward_ios,
+            color: kPrimaryColor,
+            size: 20,
+          ),
+        ),
+        ListTile(
+          leading: RadiantGradientMask(
+              child: Icon(
+            Icons.favorite,
+            size: 40,
+            color: Colors.white,
+          )),
+          title: Text('Fav'),
+          trailing: Icon(
+            Icons.arrow_forward_ios,
+            color: kPrimaryColor,
+            size: 20,
+          ),
+        ),
+        ListTile(
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return userNotifications();
+              },
+            ),
+          ),
+          leading: RadiantGradientMask(
+              child: Icon(
+            Icons.notifications,
+            size: 40,
+            color: Colors.white,
+          )),
+          title: Text('Notifications'),
+          trailing: Icon(
+            Icons.arrow_forward_ios,
+            color: kPrimaryColor,
+            size: 20,
+          ),
+        ),
+      ],
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pro_app/screens/HomePage/components/userbar.dart';
 
 class Body extends StatefulWidget {
   const Body({Key? key, required this.title}) : super(key: key);
@@ -12,6 +13,6 @@ class Body extends StatefulWidget {
 class _Body extends State<Body> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return UserBar();
   }
 }

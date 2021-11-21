@@ -1,6 +1,7 @@
 import 'package:pro_app/components/main_button.dart';
 import 'package:pro_app/components/text_field.dart';
 import 'package:pro_app/constants.dart';
+import 'package:pro_app/models/User/get_items.dart';
 import 'package:pro_app/models/User/set_items.dart';
 import 'package:pro_app/widgets/title_text.dart';
 import 'package:flutter/material.dart';
@@ -36,10 +37,15 @@ class Order extends StatefulWidget {
 
 class _OrderState extends State<Order> {
   var products;
+  var coupon = "";
+  var varifyCoupon = [];
+  var onceCoupon = true;
+  var price;
   _OrderState({this.products});
   var loadproducts = false;
   @override
   void initState() {
+    price = products["price"];
     print(products.toString());
     super.initState();
   }
@@ -66,7 +72,6 @@ class _OrderState extends State<Order> {
                         products["objectId"],
                         products["name"],
                         products["old_price"],
-                        products["price"],
                         products["discription"],
                         products["category"].get<String>('objectId').toString(),
                         products["language_code"],
@@ -84,7 +89,7 @@ class _OrderState extends State<Order> {
     );
   }
 
-  Widget _item(id, name, oldprice, price, discription, selectedCategories,
+  Widget _item(id, name, oldprice, discription, selectedCategories,
       selectedLanguages, selectedTags, picture, context, queryData) {
     return Container(
       padding: EdgeInsets.all(10),
@@ -111,8 +116,7 @@ class _OrderState extends State<Order> {
                       title: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          SizedBox(
-                            width: 50,
+                          Expanded(
                             child: TitleText(
                               text: name,
                               color: Colors.black,
@@ -223,45 +227,126 @@ class _OrderState extends State<Order> {
               ],
             ),
           ),
-          Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  color: Colors.transparent,
-                  width: 250,
-                  child: TextInput(
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                          border: InputBorder.none,
-                          prefixIcon: Padding(
-                            padding: EdgeInsets.only(bottom: 4.0),
-                            child: Icon(
-                              Icons.confirmation_number_outlined,
-                              color: Colors.grey,
-                            ),
-                            // icon is 48px widget.
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                color: Colors.transparent,
+                width: 250,
+                child: TextInput(
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.only(bottom: 4.0),
+                          child: Icon(
+                            Icons.confirmation_number_outlined,
+                            color: Colors.grey,
                           ),
-                          hintText: 'Coupon',
-                          hintStyle: TextStyle(fontSize: 12.0)),
-                      keyboardType: TextInputType.number,
-                      onChanged: (value) {},
-                    ),
+                          // icon is 48px widget.
+                        ),
+                        hintText: 'Coupon',
+                        hintStyle: TextStyle(fontSize: 12.0)),
+                    keyboardType: TextInputType.number,
+                    onChanged: (value) {
+                      coupon = value.toString();
+                    },
                   ),
                 ),
-                TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      "apply",
-                      style: TextStyle(color: Colors.black),
-                    ))
+              ),
+              TextButton(
+                  onPressed: () async {
+                    if (onceCoupon) {
+                      varifyCoupon = await get_coupon(coupon);
+                      if (!varifyCoupon.isEmpty) {
+                        setState(() {
+                          price = products["price"] /
+                              (100 / varifyCoupon[0]["percentage"]);
+                          onceCoupon = false;
+                          final snackBar =
+                              SnackBar(content: Text('Coupon applied'));
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        });
+                      } else {
+                        final snackBar = SnackBar(
+                            content: Text('Coupon is invalide or expired'));
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      }
+                    }
+                  },
+                  child: Text(
+                    "apply",
+                    style: TextStyle(color: Colors.black),
+                  ))
+            ],
+          ),
+          !varifyCoupon.isEmpty
+              ? Container(
+                  margin: EdgeInsets.only(top: 10, bottom: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Coupon applied : "),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          TitleText(
+                            textalign: TextAlign.right,
+                            text: varifyCoupon[0]["percentage"].toString(),
+                            fontSize: 18,
+                            color: Colors.black,
+                          ),
+                          const TitleText(
+                            textalign: TextAlign.right,
+                            text: " %",
+                            fontSize: 16,
+                            color: kPrimaryColor,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                )
+              : SizedBox(),
+          Container(
+            margin: EdgeInsets.only(top: 10, bottom: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("Total : "),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TitleText(
+                      textalign: TextAlign.right,
+                      text: price.toString(),
+                      fontSize: 18,
+                      color: Colors.black,
+                    ),
+                    const TitleText(
+                      textalign: TextAlign.right,
+                      text: " coin",
+                      fontSize: 16,
+                      color: kPrimaryColor,
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
           ButtonMain(
             text: "buy",
-            press: () async {},
+            press: () async {
+              if (await set_order(products["objectId"], products["price"],
+                  price, onceCoupon == true ? null : varifyCoupon[0], "")) {
+                final snackBar =
+                    SnackBar(content: Text('You order is in process'));
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+                Navigator.pop(context);
+              }
+            },
           ),
         ],
       ),

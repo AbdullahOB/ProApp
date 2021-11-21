@@ -44,7 +44,6 @@ class _HomepageState extends State<Homepage> {
 
   get_current_user() async {
     var currentuser = await ParseUser.currentUser();
-    get_favourite();
     setState(() {
       role = currentuser["role"];
       current_user_id = currentuser["objectId"];
@@ -73,6 +72,7 @@ class _HomepageState extends State<Homepage> {
         ));
       }
     }
+    if (!mounted) return;
     setState(() {
       children;
     });
@@ -91,89 +91,74 @@ class _HomepageState extends State<Homepage> {
   Widget build(BuildContext context) {
     MediaQueryData queryData;
     queryData = MediaQuery.of(context);
-    return SafeArea(
-      child: Material(
-        child: Stack(
-          alignment: Alignment.bottomCenter,
-          children: [
-            Container(
-              padding: EdgeInsets.all(0),
-              width: queryData.size.width,
-              height: queryData.size.height,
-              color: Colors.white,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(padding: EdgeInsets.only(top: 10)),
-                  TitleText(
-                    text: "ProApp",
-                    fontSize: 27,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.black,
-                  ),
-                  Padding(padding: EdgeInsets.only(bottom: 10)),
-                  categoriesSlider(),
-                  Expanded(
-                      child: ListView(children: [
-                    AspectRatio(
-                      aspectRatio: 350 / 150,
-                      child: Container(
-                        width: double.infinity,
-                        height: double.infinity,
-                        color: Colors.green,
-                        child: Swiper(
-                          autoplay: true,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Image.network(
-                              images[index],
-                              fit: BoxFit.fill,
-                            );
-                          },
-                          itemCount: 3,
-                          pagination: SwiperPagination(
-                              margin: EdgeInsets.all(0.0),
-                              builder: SwiperCustomPagination(builder:
-                                  (BuildContext context,
-                                      SwiperPluginConfig config) {
-                                return ConstrainedBox(
-                                  child: Row(
-                                    children: <Widget>[
-                                      Expanded(
-                                        child: Align(
-                                          alignment: Alignment.center,
-                                          child: DotSwiperPaginationBuilder(
-                                                  color: Colors.transparent,
-                                                  activeColor:
-                                                      Colors.transparent,
-                                                  size: 10.0,
-                                                  activeSize: 15.0)
-                                              .build(context, config),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                  constraints:
-                                      BoxConstraints.expand(height: 50.0),
-                                );
-                              })),
-                          control: SwiperControl(color: Colors.transparent),
-                        ),
-                      ),
-                    ),
-                    for (var i = 0; i < children.length; i++) children[i],
-                    Container(
-                      height: 100,
-                    )
-                  ]))
-                ],
+    return Container(
+      padding: EdgeInsets.all(0),
+      width: queryData.size.width,
+      height: queryData.size.height,
+      color: Colors.white,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(padding: EdgeInsets.only(top: 10)),
+          TitleText(
+            text: "ProApp",
+            fontSize: 27,
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
+          ),
+          Padding(padding: EdgeInsets.only(bottom: 10)),
+          categoriesSlider(),
+          Expanded(
+              child: ListView(children: [
+            AspectRatio(
+              aspectRatio: 350 / 150,
+              child: Container(
+                width: double.infinity,
+                height: double.infinity,
+                color: Colors.green,
+                child: Swiper(
+                  autoplay: true,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Image.network(
+                      images[index],
+                      fit: BoxFit.fill,
+                    );
+                  },
+                  itemCount: 3,
+                  pagination: SwiperPagination(
+                      margin: EdgeInsets.all(0.0),
+                      builder: SwiperCustomPagination(builder:
+                          (BuildContext context, SwiperPluginConfig config) {
+                        return ConstrainedBox(
+                          child: Row(
+                            children: <Widget>[
+                              Expanded(
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: DotSwiperPaginationBuilder(
+                                          color: Colors.transparent,
+                                          activeColor: Colors.transparent,
+                                          size: 10.0,
+                                          activeSize: 15.0)
+                                      .build(context, config),
+                                ),
+                              )
+                            ],
+                          ),
+                          constraints: BoxConstraints.expand(height: 50.0),
+                        );
+                      })),
+                  control: SwiperControl(color: Colors.transparent),
+                ),
               ),
             ),
+            for (var i = 0; i < children.length; i++) children[i],
             Container(
-              child: bottomNavBar(),
-            ),
-          ],
-        ),
+              height: 100,
+            )
+          ]))
+        ],
       ),
     );
   }
@@ -294,7 +279,7 @@ class _SliderProductsState extends State<SliderProducts> {
 
   get_fav() async {
     List<ParseObject> favourite = await get_favourite();
-
+    if (!mounted) return;
     setState(() {
       newfav = favourite;
       favourite = newfav;
@@ -411,6 +396,7 @@ class _SliderProductsState extends State<SliderProducts> {
                                                   await delete_item(
                                                       objid, "favourite");
                                                   await get_fav();
+                                                  if (!mounted) return;
                                                   setState(() {
                                                     handelpress = true;
                                                   });
@@ -434,6 +420,7 @@ class _SliderProductsState extends State<SliderProducts> {
                                                           .toString(),
                                                       current_user_id);
                                                   await get_fav();
+                                                  if (!mounted) return;
                                                   setState(() {
                                                     handelpress = true;
                                                   });

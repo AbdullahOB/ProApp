@@ -1,8 +1,6 @@
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:pro_app/models/Admin/get_items.dart';
 import 'package:pro_app/widgets/title_text.dart';
-
-import 'components/adminbar.dart';
 import 'package:flutter/material.dart';
 
 class ServiceNotifications extends StatefulWidget {
@@ -75,10 +73,12 @@ class _ServiceNotificationsState extends State<ServiceNotifications> {
                             .toString(),
                         orders[0][index]["createdAt"],
                         orders[0][index]["status"],
-                        orders[0][index]
-                            .get<ParseObject>('coupon')
-                            .get<String>('code')
-                            .toString(),
+                        orders[0][index]["coupon"] == null
+                            ? "no"
+                            : orders[0][index]
+                                .get<ParseObject>('coupon')
+                                .get<String>('code')
+                                .toString(),
                         orders[0][index]["total_amount_with_coupons"],
                         orders[0][index]["total_amount"],
                         orders[1][index]
@@ -130,13 +130,9 @@ class _ServiceNotificationsState extends State<ServiceNotifications> {
                     fontSize: 15,
                     fontWeight: FontWeight.w700,
                   ),
-                  subtitle: Row(
-                    children: <Widget>[
-                      TitleText(
-                        text: list["name"],
-                        fontSize: 14,
-                      ),
-                    ],
+                  subtitle: TitleText(
+                    text: list["name"],
+                    fontSize: 14,
                   ),
                   trailing: Container(
                     width: 80,
@@ -159,8 +155,7 @@ class _ServiceNotificationsState extends State<ServiceNotifications> {
   Widget _requestorder(queryData, id, user, manager, date, status, coupon,
       totalAmountWithCoupons, totalAmount, productsList) {
     return Container(
-        margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
-        height: (80 * 4) + 150,
+        margin: EdgeInsets.fromLTRB(0, 10, 10, 0),
         width: queryData.size.width,
         color: Colors.white,
         child: Column(children: [
@@ -180,7 +175,7 @@ class _ServiceNotificationsState extends State<ServiceNotifications> {
                         children: [
                           TitleText(
                             text: user.toString(),
-                            fontSize: 20,
+                            fontSize: 13,
                             fontWeight: FontWeight.w700,
                           ),
                           Container(
@@ -291,6 +286,10 @@ class _ServiceNotificationsState extends State<ServiceNotifications> {
                 ),
               ],
             ),
+          ),
+          Divider(
+            height: 5,
+            thickness: 2,
           ),
         ]));
   }

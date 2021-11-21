@@ -7,6 +7,7 @@ import 'package:pro_app/screens/Admin/coins/coins.dart';
 import 'package:pro_app/screens/Admin/components/adminbar.dart';
 import 'package:pro_app/screens/Admin/notifications.dart';
 import 'package:pro_app/screens/Admin/products/service.dart';
+import 'package:pro_app/screens/HomePage/components/userbar.dart';
 import 'package:pro_app/screens/HomePage/homepage.dart';
 import 'package:pro_app/screens/Login/login_creen.dart';
 import 'package:pro_app/screens/Register/register_screen.dart';
@@ -68,7 +69,7 @@ class _BodyState extends State<Body> {
                 TextButton(
                     onPressed: () => Navigator.push(context, MaterialPageRoute(
                           builder: (context) {
-                            return Homepage();
+                            return UserBar();
                           },
                         )),
                     child: Text("HomePage")),
