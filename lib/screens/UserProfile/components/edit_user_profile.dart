@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:pro_app/components/CustomButton.dart';
-import 'package:pro_app/components/TextFieldNormal.dart';
-import 'package:pro_app/components/mainButton.dart';
-import 'package:pro_app/components/roundedTextField.dart';
-import 'package:pro_app/components/textField.dart';
-import 'package:pro_app/components/textFieldWithoutRounded.dart';
+import 'package:pro_app/components/custom_button.dart';
+import 'package:pro_app/components/text_field_normal.dart';
+import 'package:pro_app/components/main_button.dart';
+import 'package:pro_app/components/rounded_text_field.dart';
+import 'package:pro_app/components/text_field.dart';
+import 'package:pro_app/components/text_field_without_rounded.dart';
 
 import '../../../constants.dart';
 
@@ -52,7 +52,7 @@ Widget emailNameCol(BuildContext context) {
       padding: EdgeInsets.all(20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
+        children: const <Widget>[
           Text(
             "Abdullah Obaid",
             style: TextStyle(
@@ -120,7 +120,7 @@ AppBar AppBarUserProfile(BuildContext context) {
     title: Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
+      children: const <Widget>[
         Text("My Profile",
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700)),
         SizedBox(height: 5),

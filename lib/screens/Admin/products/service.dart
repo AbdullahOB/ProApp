@@ -1,10 +1,10 @@
 import 'dart:io';
 
-import 'package:pro_app/components/mainButton.dart';
+import 'package:pro_app/components/main_button.dart';
 import 'package:pro_app/models/Admin/get_items.dart';
 import 'package:pro_app/models/Admin/set_items.dart';
 import 'package:pro_app/widgets/title_text.dart';
-import 'package:pro_app/components/textField.dart';
+import 'package:pro_app/components/text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:awesome_select/awesome_select.dart';
 import 'package:image_picker/image_picker.dart';
@@ -30,6 +30,7 @@ class _ServiceState extends State<Service> {
   var oldprice;
   var discription;
 
+  @override
   void initState() {
     get_all_orders();
     super.initState();
@@ -41,7 +42,7 @@ class _ServiceState extends State<Service> {
     );
 
     setState(() {
-      loadcategories = categories.length == 0 ? true : false;
+      loadcategories = categories.isEmpty ? true : false;
     });
     print(categories);
 
@@ -198,12 +199,12 @@ class _ServiceState extends State<Service> {
     );
   }
 
-  Widget _item(with_image, hintstring, fieldtype, function) {
-    return Container(
+  Widget _item(withImage, hintstring, fieldtype, function) {
+    return SizedBox(
       height: 80,
       child: Row(
         children: <Widget>[
-          with_image
+          withImage
               ? TextButton(
                   onPressed: () => {setPicture()},
                   child: AspectRatio(
@@ -213,7 +214,7 @@ class _ServiceState extends State<Service> {
                       children: <Widget>[
                         Align(
                           alignment: Alignment.center,
-                          child: Container(
+                          child: SizedBox(
                             height: 70,
                             width: 70,
                             child: imageFile != null

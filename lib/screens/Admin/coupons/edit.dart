@@ -1,13 +1,13 @@
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:pro_app/components/mainButton.dart';
+import 'package:pro_app/components/main_button.dart';
 import 'package:pro_app/constants.dart';
 import 'package:pro_app/models/Admin/set_items.dart';
 import 'package:pro_app/models/Admin/update_items.dart';
 import 'package:pro_app/widgets/title_text.dart';
-import 'package:pro_app/components/textField.dart';
+import 'package:pro_app/components/text_field.dart';
 import '../components/adminbar.dart';
 import 'package:flutter/material.dart';
-import 'package:pro_app/components/roundedTextField.dart';
+import 'package:pro_app/components/rounded_text_field.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 import '../components/textfield.dart';
@@ -31,12 +31,12 @@ class EditCoupon extends StatefulWidget {
 
   @override
   _EditCouponState createState() => _EditCouponState(
-      name: this.name,
-      code: this.code,
-      percentage: this.percentage,
-      activationDate: this.activationDate,
-      expirDate: this.expirDate,
-      id: this.id);
+      name: name,
+      code: code,
+      percentage: percentage,
+      activationDate: activationDate,
+      expirDate: expirDate,
+      id: id);
 }
 
 class _EditCouponState extends State<EditCoupon> {
@@ -97,11 +97,11 @@ class _EditCouponState extends State<EditCoupon> {
                   height: 10,
                 ),
                 textfield(false, "Coupon name", "string", setName,
-                    value: this.name),
+                    value: name),
                 textfield(false, "Coupon Code", "string", setCode,
-                    value: this.code),
+                    value: code),
                 textfield(false, "percentage", "number", setPercentage,
-                    value: this.percentage.toString()),
+                    value: percentage.toString()),
                 Container(
                   margin: EdgeInsets.only(bottom: 10),
                   child: Row(
@@ -179,7 +179,7 @@ class _EditCouponState extends State<EditCoupon> {
                     text: "ok",
                     press: () async {
                       await update_coupons(
-                          this.id,
+                          id,
                           name,
                           code,
                           percentage,

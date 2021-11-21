@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pro_app/components/gradientIcon.dart';
+import 'package:pro_app/components/gradient_icon.dart';
 import 'package:pro_app/screens/UserProfile/components/edit_user_profile.dart';
 import 'package:pro_app/screens/UserProfile/components/notification_user_profile.dart';
 import 'package:pro_app/widgets/title_text.dart';
@@ -15,7 +15,7 @@ AppBar AppBarUserProfile(BuildContext context) {
     title: Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
+      children: const <Widget>[
         Text("My Profile",
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700)),
         SizedBox(height: 5),
@@ -57,7 +57,7 @@ class _BodyState extends State<Body> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
+                    children: const <Widget>[
                       Text(
                         "Abdullah Obaid",
                         style: TextStyle(

@@ -15,7 +15,7 @@ class bottomNavBar extends StatelessWidget {
       backgroundColor: Colors.transparent,
       buttonBackgroundColor: kPrimaryColor,
       height: 50,
-      items: <Widget>[
+      items: const <Widget>[
         Icon(
           Icons.person,
           size: 20,

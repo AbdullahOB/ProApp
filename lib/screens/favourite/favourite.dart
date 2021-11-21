@@ -22,7 +22,7 @@ AppBar AppBarUserProfile(BuildContext context) {
     title: Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
+      children: const <Widget>[
         Text("My Profile",
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700)),
         SizedBox(height: 5),
@@ -57,7 +57,7 @@ Widget slider() {
                   topRight: Radius.circular(8), topLeft: Radius.circular(8)),
               color: Colors.green,
               shape: BoxShape.rectangle,
-              boxShadow: <BoxShadow>[
+              boxShadow: const <BoxShadow>[
                 BoxShadow(
                   color: Colors.grey,
                   spreadRadius: 0.0,
@@ -111,7 +111,7 @@ Widget slider() {
                   bottomRight: Radius.circular(8)),
               color: Colors.white,
               shape: BoxShape.rectangle,
-              boxShadow: <BoxShadow>[
+              boxShadow: const <BoxShadow>[
                 BoxShadow(
                   color: Colors.grey,
                   spreadRadius: 0.0,
@@ -141,7 +141,7 @@ Widget slider() {
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
+                        children: const [
                           TitleText(
                             text: "25 ",
                             fontSize: 18,
@@ -161,7 +161,7 @@ Widget slider() {
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                  children: const [
                     SizedBox(
                       width: 40,
                     ),
@@ -183,11 +183,11 @@ class _FavouritepageState extends State<Favouritepage> {
     return Scaffold(
       body: SafeArea(
         child: Material(
-            child: Container(
+            child: SizedBox(
           width: double.infinity,
           height: queryData.size.height,
           child: ListView(children: [
-            Container(
+            SizedBox(
               height: queryData.size.height - 150,
               width: double.infinity,
               child: GridView.count(

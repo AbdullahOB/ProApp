@@ -69,7 +69,7 @@ class _userNotificationsState extends State<userNotifications> {
   }
 
   Widget _item() {
-    return Container(
+    return SizedBox(
       height: 80,
       child: Row(
         children: <Widget>[
@@ -80,7 +80,7 @@ class _userNotificationsState extends State<userNotifications> {
               children: <Widget>[
                 Align(
                   alignment: Alignment.center,
-                  child: Container(
+                  child: SizedBox(
                     height: 60,
                     width: 60,
                     child: Container(
@@ -108,7 +108,7 @@ class _userNotificationsState extends State<userNotifications> {
                     fontWeight: FontWeight.w700,
                   ),
                   subtitle: Row(
-                    children: <Widget>[
+                    children: const <Widget>[
                       TitleText(
                         text: "pubg coin",
                         fontSize: 14,
@@ -141,7 +141,7 @@ class _userNotificationsState extends State<userNotifications> {
         color: Colors.white,
         child:
             ListView(physics: const NeverScrollableScrollPhysics(), children: [
-          Container(
+          SizedBox(
             height: 80,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -154,7 +154,7 @@ class _userNotificationsState extends State<userNotifications> {
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
+                        children: const [
                           TitleText(
                             text: "Abdullah Ob Order",
                             fontSize: 20,
@@ -169,7 +169,7 @@ class _userNotificationsState extends State<userNotifications> {
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
+                        children: const [
                           TitleText(
                             text: "Order ID : 588czs965",
                             fontSize: 12,
@@ -184,7 +184,7 @@ class _userNotificationsState extends State<userNotifications> {
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
+                        children: const [
                           TitleText(
                             text: "Sponser : Abdullah",
                             fontSize: 12,
@@ -222,12 +222,12 @@ class _userNotificationsState extends State<userNotifications> {
             onPressed: _showMyDialog,
           ),
           Padding(padding: EdgeInsets.only(top: 20)),
-          Container(
+          SizedBox(
             height: 50,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              children: const [
                 TitleText(
                   text: "Total",
                   fontSize: 20,
@@ -283,7 +283,7 @@ AppBar AppBarUserProfile(BuildContext context) {
     title: Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
+      children: const <Widget>[
         Text("Notifications",
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700)),
       ],

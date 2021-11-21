@@ -26,7 +26,7 @@ class _CouponsState extends State<Coupons> {
   Future<void> get_all_coupons() async {
     coupons = await get_items(tableName: "coupons");
     setState(() {
-      loadproducts = coupons.length > 0 ? false : true;
+      loadproducts = coupons.isNotEmpty ? false : true;
     });
   }
 
@@ -80,7 +80,7 @@ class _CouponsState extends State<Coupons> {
   }
 
   Widget _item(name, code, percentage, from, to, id, context) {
-    return Container(
+    return SizedBox(
       height: 80,
       child: Row(
         children: <Widget>[
@@ -91,7 +91,7 @@ class _CouponsState extends State<Coupons> {
               children: <Widget>[
                 Align(
                   alignment: Alignment.center,
-                  child: Container(
+                  child: SizedBox(
                     height: 70,
                     width: 70,
                     child: Container(
@@ -116,7 +116,7 @@ class _CouponsState extends State<Coupons> {
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Container(
+                      SizedBox(
                         width: 100,
                         child: TitleText(
                           text: name,

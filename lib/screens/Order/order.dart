@@ -1,5 +1,5 @@
-import 'package:pro_app/components/mainButton.dart';
-import 'package:pro_app/components/textField.dart';
+import 'package:pro_app/components/main_button.dart';
+import 'package:pro_app/components/text_field.dart';
 import 'package:pro_app/constants.dart';
 import 'package:pro_app/models/User/set_items.dart';
 import 'package:pro_app/widgets/title_text.dart';
@@ -14,7 +14,7 @@ AppBar appBar(BuildContext context) {
     title: Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
+      children: const <Widget>[
         Text("Order",
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700)),
         SizedBox(height: 5),
@@ -31,7 +31,7 @@ class Order extends StatefulWidget {
   const Order({Key? key, this.products}) : super(key: key);
 
   @override
-  _OrderState createState() => _OrderState(products: this.products);
+  _OrderState createState() => _OrderState(products: products);
 }
 
 class _OrderState extends State<Order> {
@@ -60,7 +60,7 @@ class _OrderState extends State<Order> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(padding: EdgeInsets.only(top: 10)),
-                  Container(
+                  SizedBox(
                     width: double.infinity,
                     child: _item(
                         products["objectId"],
@@ -90,7 +90,7 @@ class _OrderState extends State<Order> {
       padding: EdgeInsets.all(10),
       child: Column(
         children: [
-          Container(
+          SizedBox(
             height: queryData.size.height / 3,
             width: queryData.size.width / 1.2,
             child: Container(
@@ -111,7 +111,7 @@ class _OrderState extends State<Order> {
                       title: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Container(
+                          SizedBox(
                             width: 50,
                             child: TitleText(
                               text: name,
@@ -138,7 +138,7 @@ class _OrderState extends State<Order> {
                               fontSize: 18,
                               color: Colors.black,
                             ),
-                            TitleText(
+                            const TitleText(
                               textalign: TextAlign.right,
                               text: " coin",
                               fontSize: 16,

@@ -13,7 +13,7 @@ class Categories extends StatefulWidget {
 }
 
 Widget _item(name, id, context) {
-  return Container(
+  return SizedBox(
     height: 80,
     child: Row(
       children: <Widget>[
@@ -24,7 +24,7 @@ Widget _item(name, id, context) {
             children: <Widget>[
               Align(
                 alignment: Alignment.center,
-                child: Container(
+                child: SizedBox(
                   height: 70,
                   width: 70,
                   child: Container(
@@ -52,7 +52,7 @@ Widget _item(name, id, context) {
             fontWeight: FontWeight.w700,
           ),
           subtitle: Row(
-            children: <Widget>[
+            children: const <Widget>[
               TitleText(
                 text: "count",
                 fontSize: 14,
@@ -93,7 +93,7 @@ class _CategoriesState extends State<Categories> {
   Future<void> get_all_coupons() async {
     categories = await get_items(tableName: "categories");
     setState(() {
-      loadproducts = categories.length > 0 ? false : true;
+      loadproducts = categories.isNotEmpty ? false : true;
     });
   }
 

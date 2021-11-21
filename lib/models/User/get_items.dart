@@ -38,12 +38,11 @@ Future<bool> get_coupon(code) async {
       QueryBuilder<ParseObject>(ParseObject("coupons"))
         ..whereEqualTo("activated", true)
         ..whereEqualTo("code", code)
-        ..whereLessThanOrEqualTo("from", new DateTime.now())
-        ..whereGreaterThanOrEqualsTo("to", new DateTime.now())
+        ..whereLessThanOrEqualTo("from", DateTime.now())
+        ..whereGreaterThanOrEqualsTo("to", DateTime.now())
         ..first();
 
   final ParseResponse parseResponse = await queryTodo.query();
-  ;
   if (parseResponse.success) {
     return true;
   } else {

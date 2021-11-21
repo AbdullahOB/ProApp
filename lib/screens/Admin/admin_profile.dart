@@ -29,7 +29,7 @@ class _ProfileState extends State<Profile> {
   Future<void> get_all_transitions() async {
     transitions = await get_transitions_for_current_user();
     setState(() {
-      loadproducts = transitions.length > 0 ? false : true;
+      loadproducts = transitions.isNotEmpty ? false : true;
     });
   }
 
@@ -116,7 +116,7 @@ class _ProfileState extends State<Profile> {
           color: Colors.white,
           shape: BoxShape.rectangle,
           borderRadius: BorderRadius.circular(8.0),
-          boxShadow: <BoxShadow>[
+          boxShadow: const <BoxShadow>[
             BoxShadow(
               color: Colors.black12,
               blurRadius: 10.0,
@@ -187,7 +187,7 @@ class _ProfileState extends State<Profile> {
                 color: Colors.white,
                 shape: BoxShape.rectangle,
                 borderRadius: BorderRadius.circular(8.0),
-                boxShadow: <BoxShadow>[
+                boxShadow: const <BoxShadow>[
                   BoxShadow(
                     color: Colors.black12,
                     blurRadius: 10.0,

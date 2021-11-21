@@ -32,7 +32,7 @@ class _ServiceNotificationsState extends State<ServiceNotifications> {
         ]);
 
     setState(() {
-      loadorders = orders.length == 0 ? true : false;
+      loadorders = orders.isEmpty ? true : false;
     });
   }
 
@@ -94,7 +94,7 @@ class _ServiceNotificationsState extends State<ServiceNotifications> {
   }
 
   Widget _item(list) {
-    return Container(
+    return SizedBox(
       height: 80,
       child: Row(
         children: <Widget>[
@@ -105,7 +105,7 @@ class _ServiceNotificationsState extends State<ServiceNotifications> {
               children: <Widget>[
                 Align(
                   alignment: Alignment.center,
-                  child: Container(
+                  child: SizedBox(
                     height: 70,
                     width: 70,
                     child: Container(
@@ -157,14 +157,14 @@ class _ServiceNotificationsState extends State<ServiceNotifications> {
   }
 
   Widget _requestorder(queryData, id, user, manager, date, status, coupon,
-      total_amount_with_coupons, total_amount, products_list) {
+      totalAmountWithCoupons, totalAmount, productsList) {
     return Container(
         margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
         height: (80 * 4) + 150,
         width: queryData.size.width,
         color: Colors.white,
         child: Column(children: [
-          Container(
+          SizedBox(
             height: 80,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -234,7 +234,7 @@ class _ServiceNotificationsState extends State<ServiceNotifications> {
                         children: [
                           TitleText(
                             text: coupon.toString() == ""
-                                ? "coupon : " + "no"
+                                ? "coupon : " "no"
                                 : "coupon : " + coupon.toString(),
                             fontSize: 12,
                             fontWeight: FontWeight.w700,
@@ -251,8 +251,8 @@ class _ServiceNotificationsState extends State<ServiceNotifications> {
             ),
           ),
           Padding(padding: EdgeInsets.only(top: 20)),
-          for (var list in products_list) _item(list),
-          Container(
+          for (var list in productsList) _item(list),
+          SizedBox(
             height: 50,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -264,7 +264,7 @@ class _ServiceNotificationsState extends State<ServiceNotifications> {
                   fontWeight: FontWeight.w700,
                 ),
                 TitleText(
-                  text: total_amount.toString() + " coin",
+                  text: totalAmount.toString() + " coin",
                   fontSize: 15,
                   fontWeight: FontWeight.w700,
                   color: Colors.black,
@@ -272,7 +272,7 @@ class _ServiceNotificationsState extends State<ServiceNotifications> {
               ],
             ),
           ),
-          Container(
+          SizedBox(
             height: 50,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -284,7 +284,7 @@ class _ServiceNotificationsState extends State<ServiceNotifications> {
                   fontWeight: FontWeight.w700,
                 ),
                 TitleText(
-                  text: total_amount_with_coupons.toString() + " coin",
+                  text: totalAmountWithCoupons.toString() + " coin",
                   fontSize: 15,
                   fontWeight: FontWeight.w700,
                   color: Colors.black,

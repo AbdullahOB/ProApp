@@ -30,7 +30,7 @@ Future<bool> set_category(name) async {
   }
 }
 
-Future<bool> set_product(name, oldprice, price, discription, category_id,
+Future<bool> set_product(name, oldprice, price, discription, categoryId,
     language, tag, image) async {
   ParseFileBase? parseFile;
 
@@ -45,7 +45,7 @@ Future<bool> set_product(name, oldprice, price, discription, category_id,
     ..set("language_code", language.toString())
     ..set("tag", tag.toString())
     ..set("category",
-        ParseObject('categories')..objectId = category_id.toString())
+        ParseObject('categories')..objectId = categoryId.toString())
     ..set("picture", parseFile);
 
   final ParseResponse parseResponse = await parseObject.save();
@@ -57,8 +57,8 @@ Future<bool> set_product(name, oldprice, price, discription, category_id,
   }
 }
 
-Future<bool> set_coin(user_id, amount) async {
-  var user = await ParseUser.forQuery().getObject(user_id.toString());
+Future<bool> set_coin(userId, amount) async {
+  var user = await ParseUser.forQuery().getObject(userId.toString());
 
   QueryBuilder<ParseObject> queryTodo =
       QueryBuilder<ParseObject>(ParseObject("coins"))
@@ -92,14 +92,14 @@ Future<bool> set_coin(user_id, amount) async {
   }
 }
 
-Future<bool> set_transitions(to_user_id, amount) async {
-  var from_user_id = await ParseUser.getCurrentUserFromServer(
+Future<bool> set_transitions(toUserId, amount) async {
+  var fromUserId = await ParseUser.getCurrentUserFromServer(
       (await ParseUser.currentUser())["sessionToken"]);
   var transitions = ParseObject('transitions')
     ..set('amount', int.parse(amount.toString()))
-    ..set('from_user_id', from_user_id!.result)
-    ..set('to_user_id', to_user_id)
-    ..set('date_time', new DateTime.now());
+    ..set('from_user_id', fromUserId!.result)
+    ..set('to_user_id', toUserId)
+    ..set('date_time', DateTime.now());
   final ParseResponse parseResponse = await transitions.save();
   if (parseResponse.success) {
     return true;

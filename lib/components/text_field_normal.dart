@@ -1,35 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:pro_app/components/textField.dart';
+import 'package:pro_app/components/gradient_icon.dart';
+import 'package:pro_app/components/text_field.dart';
+import 'package:pro_app/components/text_field_without_rounded.dart';
 
 import '../constants.dart';
 
-class RoundedInputField extends StatelessWidget {
+class NormalInputField extends StatelessWidget {
   final String hintText;
   final IconData icon;
   final FormFieldValidator validator;
   final ValueChanged<String> onChanged;
-  final controllerName;
-  const RoundedInputField({
+
+  const NormalInputField({
     Key? key,
     required this.hintText,
     required this.icon,
     required this.onChanged,
     required this.validator,
-    required this.controllerName,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return TextInput(
+    return TextInputNotRounded(
       child: TextFormField(
-        controller: controllerName,
         validator: validator,
         onChanged: onChanged,
         decoration: InputDecoration(
-          icon: Icon(
+          icon: RadiantGradientMask(
+              child: Icon(
             icon,
-            color: kPrimaryColor,
-          ),
+            size: 25,
+            color: Colors.white,
+          )),
           hintText: hintText,
           border: InputBorder.none,
         ),

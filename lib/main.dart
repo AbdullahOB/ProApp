@@ -5,9 +5,9 @@ import 'package:pro_app/screens/welcome/welcome_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final keyApplicationId = 'wfx5nSI9jXmBJqyxo9bavlWZUISHUNV8ZLx7sQ5C';
-  final keyClientKey = 'Jf4y8zM1JMojmBJbDCo3ZHIFPJor7BXjICotLdeJ';
-  final keyParseServerUrl = 'https://parseapi.back4app.com';
+  const keyApplicationId = 'wfx5nSI9jXmBJqyxo9bavlWZUISHUNV8ZLx7sQ5C';
+  const keyClientKey = 'Jf4y8zM1JMojmBJbDCo3ZHIFPJor7BXjICotLdeJ';
+  const keyParseServerUrl = 'https://parseapi.back4app.com';
 
   await Parse().initialize(keyApplicationId, keyParseServerUrl,
       clientKey: keyClientKey, debug: true);

@@ -26,7 +26,7 @@ class _DashboardState extends State<Dashboard> {
 
     if (mounted) {
       setState(() {
-        loadproducts = products.length > 0 ? false : true;
+        loadproducts = products.isNotEmpty ? false : true;
       });
     }
   }
@@ -89,7 +89,7 @@ class _DashboardState extends State<Dashboard> {
 
   Widget _item(id, name, oldprice, price, discription, selectedCategories,
       selectedLanguages, selectedTags, picture, context) {
-    return Container(
+    return SizedBox(
       height: 80,
       child: Row(
         children: <Widget>[
@@ -100,7 +100,7 @@ class _DashboardState extends State<Dashboard> {
               children: <Widget>[
                 Align(
                   alignment: Alignment.center,
-                  child: Container(
+                  child: SizedBox(
                     height: 70,
                     width: 70,
                     child: Container(
@@ -122,7 +122,7 @@ class _DashboardState extends State<Dashboard> {
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Container(
+                      SizedBox(
                         width: 50,
                         child: TitleText(
                           text: name,

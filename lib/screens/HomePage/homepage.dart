@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
-import 'package:pro_app/components/bottomNavBar.dart';
+import 'package:pro_app/components/bottom_nav_bar.dart';
 import 'package:pro_app/models/User/delete_items.dart';
 import 'package:pro_app/models/User/get_items.dart';
 import 'package:pro_app/models/User/set_items.dart';
@@ -125,24 +125,24 @@ class _HomepageState extends State<Homepage> {
                         child: Swiper(
                           autoplay: true,
                           itemBuilder: (BuildContext context, int index) {
-                            return new Image.network(
+                            return Image.network(
                               images[index],
                               fit: BoxFit.fill,
                             );
                           },
                           itemCount: 3,
-                          pagination: new SwiperPagination(
-                              margin: new EdgeInsets.all(0.0),
-                              builder: new SwiperCustomPagination(builder:
+                          pagination: SwiperPagination(
+                              margin: EdgeInsets.all(0.0),
+                              builder: SwiperCustomPagination(builder:
                                   (BuildContext context,
                                       SwiperPluginConfig config) {
-                                return new ConstrainedBox(
-                                  child: new Row(
+                                return ConstrainedBox(
+                                  child: Row(
                                     children: <Widget>[
-                                      new Expanded(
-                                        child: new Align(
+                                      Expanded(
+                                        child: Align(
                                           alignment: Alignment.center,
-                                          child: new DotSwiperPaginationBuilder(
+                                          child: DotSwiperPaginationBuilder(
                                                   color: Colors.transparent,
                                                   activeColor:
                                                       Colors.transparent,
@@ -154,10 +154,10 @@ class _HomepageState extends State<Homepage> {
                                     ],
                                   ),
                                   constraints:
-                                      new BoxConstraints.expand(height: 50.0),
+                                      BoxConstraints.expand(height: 50.0),
                                 );
                               })),
-                          control: new SwiperControl(color: Colors.transparent),
+                          control: SwiperControl(color: Colors.transparent),
                         ),
                       ),
                     ),
@@ -198,7 +198,7 @@ class _HomepageState extends State<Homepage> {
                     shape: BoxShape.rectangle,
                     border: Border.all(width: 2.0, color: kPrimaryLightColor),
                     borderRadius: BorderRadius.circular(8.0),
-                    boxShadow: <BoxShadow>[
+                    boxShadow: const <BoxShadow>[
                       BoxShadow(
                         color: Colors.grey,
                         spreadRadius: 0.0,
@@ -334,7 +334,7 @@ class _SliderProductsState extends State<SliderProducts> {
                                 topLeft: Radius.circular(8)),
                             color: Colors.green,
                             shape: BoxShape.rectangle,
-                            boxShadow: <BoxShadow>[
+                            boxShadow: const <BoxShadow>[
                               BoxShadow(
                                 color: Colors.grey,
                                 spreadRadius: 0.0,
@@ -392,7 +392,7 @@ class _SliderProductsState extends State<SliderProducts> {
                                                   setState(() {
                                                     handelpress = false;
                                                   });
-                                                  var fav_index = newfav
+                                                  var favIndex = newfav
                                                       .indexWhere((element) =>
                                                           element["product_id"]
                                                               .get<String>(
@@ -403,9 +403,9 @@ class _SliderProductsState extends State<SliderProducts> {
                                                                       index)[
                                                               "objectId"]);
                                                   var objid = newfav.elementAt(
-                                                      fav_index)["objectId"];
+                                                      favIndex)["objectId"];
                                                   setState(() {
-                                                    newfav.removeAt(fav_index);
+                                                    newfav.removeAt(favIndex);
                                                   });
 
                                                   await delete_item(
@@ -477,7 +477,7 @@ class _SliderProductsState extends State<SliderProducts> {
                                 bottomRight: Radius.circular(8)),
                             color: Colors.white,
                             shape: BoxShape.rectangle,
-                            boxShadow: <BoxShadow>[
+                            boxShadow: const <BoxShadow>[
                               BoxShadow(
                                 color: Colors.grey,
                                 spreadRadius: 0.0,
@@ -521,7 +521,7 @@ class _SliderProductsState extends State<SliderProducts> {
                                                             index)["old_price"]
                                                         .toString() +
                                                     " coin\n",
-                                                style: new TextStyle(
+                                                style: TextStyle(
                                                   color: Colors.grey,
                                                   decoration: TextDecoration
                                                       .lineThrough,
@@ -576,7 +576,7 @@ class _SliderProductsState extends State<SliderProducts> {
                     margin: EdgeInsets.only(left: 10, right: 10),
                     width: 50,
                     height: 50,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Colors.white,
                       shape: BoxShape.circle,
                       boxShadow: <BoxShadow>[
@@ -588,7 +588,7 @@ class _SliderProductsState extends State<SliderProducts> {
                         ),
                       ],
                     ),
-                    child: Center(
+                    child: const Center(
                       child: Icon(Icons.arrow_forward_ios),
                     ),
                   );

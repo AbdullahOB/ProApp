@@ -1,7 +1,7 @@
-import 'package:pro_app/components/mainButton.dart';
+import 'package:pro_app/components/main_button.dart';
 import 'package:pro_app/models/Admin/set_items.dart';
 import 'package:pro_app/widgets/title_text.dart';
-import 'package:pro_app/components/textField.dart';
+import 'package:pro_app/components/text_field.dart';
 import 'package:flutter/material.dart';
 
 class Category extends StatefulWidget {
@@ -65,12 +65,12 @@ class _CategoryState extends State<Category> {
     );
   }
 
-  Widget _item(with_image, hintstring, fieldtype) {
-    return Container(
+  Widget _item(withImage, hintstring, fieldtype) {
+    return SizedBox(
       height: 80,
       child: Row(
         children: <Widget>[
-          with_image
+          withImage
               ? AspectRatio(
                   aspectRatio: 1.2,
                   child: Stack(
@@ -78,7 +78,7 @@ class _CategoryState extends State<Category> {
                     children: <Widget>[
                       Align(
                         alignment: Alignment.center,
-                        child: Container(
+                        child: SizedBox(
                           height: 70,
                           width: 70,
                           child: Container(

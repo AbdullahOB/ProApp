@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class RadiantGradientMask extends StatelessWidget {
-  RadiantGradientMask({required this.child});
+  const RadiantGradientMask({required this.child});
   final Widget child;
 
   @override

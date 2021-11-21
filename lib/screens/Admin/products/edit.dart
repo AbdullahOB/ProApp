@@ -1,12 +1,12 @@
 import 'dart:io';
 
-import 'package:pro_app/components/mainButton.dart';
+import 'package:pro_app/components/main_button.dart';
 import 'package:pro_app/models/Admin/get_items.dart';
 import 'package:pro_app/models/Admin/set_items.dart';
 import 'package:pro_app/models/Admin/update_items.dart';
 import 'package:pro_app/screens/Admin/components/textfield.dart';
 import 'package:pro_app/widgets/title_text.dart';
-import 'package:pro_app/components/textField.dart';
+import 'package:pro_app/components/text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:awesome_select/awesome_select.dart';
 import 'package:image_picker/image_picker.dart';
@@ -37,15 +37,15 @@ class EditService extends StatefulWidget {
 
   @override
   _EditServiceState createState() => _EditServiceState(
-      id: this.id,
-      name: this.name,
-      oldprice: this.oldprice,
-      price: this.price,
-      discription: this.discription,
-      selectedCategories: this.selectedCategories,
-      selectedLanguages: this.selectedLanguages,
-      selectedTags: this.selectedTags,
-      imageFile: this.imageFile);
+      id: id,
+      name: name,
+      oldprice: oldprice,
+      price: price,
+      discription: discription,
+      selectedCategories: selectedCategories,
+      selectedLanguages: selectedLanguages,
+      selectedTags: selectedTags,
+      imageFile: imageFile);
 }
 
 class _EditServiceState extends State<EditService> {
@@ -73,6 +73,7 @@ class _EditServiceState extends State<EditService> {
   var categories = [];
   var categoriesChoice = <S2Choice<dynamic>>[];
 
+  @override
   void initState() {
     get_all_orders();
     super.initState();
@@ -84,7 +85,7 @@ class _EditServiceState extends State<EditService> {
     );
 
     setState(() {
-      loadcategories = categories.length == 0 ? true : false;
+      loadcategories = categories.isEmpty ? true : false;
     });
     print(categories);
 
@@ -253,12 +254,12 @@ class _EditServiceState extends State<EditService> {
     );
   }
 
-  Widget _item(with_image, hintstring, fieldtype, function, {value = ""}) {
-    return Container(
+  Widget _item(withImage, hintstring, fieldtype, function, {value = ""}) {
+    return SizedBox(
       height: 80,
       child: Row(
         children: <Widget>[
-          with_image
+          withImage
               ? TextButton(
                   onPressed: () => {setPicture()},
                   child: AspectRatio(
@@ -268,7 +269,7 @@ class _EditServiceState extends State<EditService> {
                       children: <Widget>[
                         Align(
                           alignment: Alignment.center,
-                          child: Container(
+                          child: SizedBox(
                             height: 70,
                             width: 70,
                             child: imageFile != null

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Body extends StatefulWidget {
-  Body({Key? key, required this.title}) : super(key: key);
+  const Body({Key? key, required this.title}) : super(key: key);
 
   final String title;
 

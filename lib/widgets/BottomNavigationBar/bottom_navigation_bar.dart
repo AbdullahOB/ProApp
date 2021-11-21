@@ -4,7 +4,7 @@ import 'package:pro_app/widgets/BottomNavigationBar/bottom_curved_Painter.dart';
 
 class CustomBottomNavigationBar extends StatefulWidget {
   final Function(int) onIconPresedCallback;
-  CustomBottomNavigationBar({Key? key, required this.onIconPresedCallback})
+  const CustomBottomNavigationBar({Key? key, required this.onIconPresedCallback})
       : super(key: key);
 
   @override
@@ -138,8 +138,8 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar>
   @override
   Widget build(BuildContext context) {
     final appSize = MediaQuery.of(context).size;
-    final height = 60.0;
-    return Container(
+    const height = 60.0;
+    return SizedBox(
       width: appSize.width,
       height: 60,
       child: Stack(

@@ -47,7 +47,7 @@ class _CoinsState extends State<Coins> {
         includeObject: ["from_user_id", "to_user_id"]);
 
     setState(() {
-      loadproducts = transitions.length > 0 ? false : true;
+      loadproducts = transitions.isNotEmpty ? false : true;
     });
   }
 
@@ -117,7 +117,7 @@ class _CoinsState extends State<Coins> {
           color: kPrimaryColor,
           shape: BoxShape.rectangle,
           borderRadius: BorderRadius.circular(8.0),
-          boxShadow: <BoxShadow>[
+          boxShadow: const <BoxShadow>[
             BoxShadow(
               color: Colors.black12,
               blurRadius: 10.0,
@@ -147,7 +147,7 @@ class _CoinsState extends State<Coins> {
           color: Colors.white,
           shape: BoxShape.rectangle,
           borderRadius: BorderRadius.circular(8.0),
-          boxShadow: <BoxShadow>[
+          boxShadow: const <BoxShadow>[
             BoxShadow(
               color: Colors.black12,
               blurRadius: 10.0,
@@ -216,7 +216,7 @@ class _CoinsState extends State<Coins> {
 
 class UserDialog extends StatefulWidget {
   @override
-  _UserDialogState createState() => new _UserDialogState();
+  _UserDialogState createState() => _UserDialogState();
 }
 
 class _UserDialogState extends State<UserDialog> {
@@ -273,13 +273,13 @@ class _UserDialogState extends State<UserDialog> {
     return user_id == ""
         ? AlertDialog(
             title: Text('AlertDialog Title'),
-            content: Container(
+            content: SizedBox(
               height: 250,
               child: Column(
                 children: [
                   textfield(
                       false, "Email / ID", "string", get_user_suggestions),
-                  Container(
+                  SizedBox(
                       width: 250,
                       height: 150,
                       child: ListView.builder(
@@ -322,7 +322,7 @@ class _UserDialogState extends State<UserDialog> {
           )
         : AlertDialog(
             title: Text('AlertDialog Title'),
-            content: Container(
+            content: SizedBox(
               height: 250,
               child: Column(
                 children: [

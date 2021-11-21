@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
-import 'package:pro_app/components/OrDivider.dart';
-import 'package:pro_app/components/alreadyHaveAnAccount.dart';
-import 'package:pro_app/components/mainButton.dart';
-import 'package:pro_app/components/roundedPasswordField.dart';
-import 'package:pro_app/components/roundedTextField.dart';
-import 'package:pro_app/components/textField.dart';
+import 'package:pro_app/components/or_divider.dart';
+import 'package:pro_app/components/already_hav_an_account.dart';
+import 'package:pro_app/components/main_button.dart';
+import 'package:pro_app/components/rounded_password_field.dart';
+import 'package:pro_app/components/rounded_text_field.dart';
+import 'package:pro_app/components/text_field.dart';
 import 'package:pro_app/constants.dart';
 import 'package:pro_app/screens/HomePage/homepage.dart';
-import 'package:pro_app/screens/Register/registerScreen.dart';
+import 'package:pro_app/screens/Register/register_screen.dart';
 import 'background.dart';
 
 class Body extends StatefulWidget {
@@ -111,7 +111,7 @@ class _Body extends State<Body> {
           title: const Text("Success!"),
           content: Text(message),
           actions: <Widget>[
-            new TextButton(
+            TextButton(
               child: const Text("OK"),
               onPressed: () {
                 Navigator.of(context).pop();
@@ -131,7 +131,7 @@ class _Body extends State<Body> {
           title: const Text("Error!"),
           content: Text(errorMessage),
           actions: <Widget>[
-            new TextButton(
+            TextButton(
               child: const Text("OK"),
               onPressed: () {
                 Navigator.of(context).pop();

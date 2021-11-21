@@ -1,9 +1,9 @@
-import 'package:pro_app/components/mainButton.dart';
+import 'package:pro_app/components/main_button.dart';
 import 'package:pro_app/models/Admin/set_items.dart';
 import 'package:pro_app/models/Admin/update_items.dart';
 import 'package:pro_app/screens/Admin/components/textfield.dart';
 import 'package:pro_app/widgets/title_text.dart';
-import 'package:pro_app/components/textField.dart';
+import 'package:pro_app/components/text_field.dart';
 import 'package:flutter/material.dart';
 
 class EditCategory extends StatefulWidget {
@@ -13,7 +13,7 @@ class EditCategory extends StatefulWidget {
 
   @override
   _EditCategoryState createState() =>
-      _EditCategoryState(id: this.id, name: this.name);
+      _EditCategoryState(id: id, name: name);
 }
 
 class _EditCategoryState extends State<EditCategory> {

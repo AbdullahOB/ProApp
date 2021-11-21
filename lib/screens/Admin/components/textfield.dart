@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:pro_app/components/textField.dart';
+import 'package:pro_app/components/text_field.dart';
 
-Widget textfield(bool with_image, hintstring, fieldtype, function,
+Widget textfield(bool withImage, hintstring, fieldtype, function,
     {value = ""}) {
-  return Container(
+  return SizedBox(
     height: 80,
     child: Row(
       children: <Widget>[
-        with_image
+        withImage
             ? AspectRatio(
                 aspectRatio: 1.2,
                 child: Stack(
@@ -15,7 +15,7 @@ Widget textfield(bool with_image, hintstring, fieldtype, function,
                   children: <Widget>[
                     Align(
                       alignment: Alignment.center,
-                      child: Container(
+                      child: SizedBox(
                         height: 70,
                         width: 70,
                         child: Container(

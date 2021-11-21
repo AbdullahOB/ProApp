@@ -28,7 +28,7 @@ AppBar AppBarEmailVerification(BuildContext context) {
     title: Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
+      children: const <Widget>[
         Text("Email Verification",
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700)),
       ],

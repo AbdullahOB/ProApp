@@ -8,8 +8,8 @@ import 'package:pro_app/screens/Admin/components/adminbar.dart';
 import 'package:pro_app/screens/Admin/notifications.dart';
 import 'package:pro_app/screens/Admin/products/service.dart';
 import 'package:pro_app/screens/HomePage/homepage.dart';
-import 'package:pro_app/screens/Login/LoginScreen.dart';
-import 'package:pro_app/screens/Register/registerScreen.dart';
+import 'package:pro_app/screens/Login/login_creen.dart';
+import 'package:pro_app/screens/Register/register_screen.dart';
 import 'package:pro_app/screens/Admin/dashboard.dart';
 import 'package:pro_app/screens/UserProfile/user_profile.dart';
 import 'package:pro_app/screens/favourite/Favourite.dart';
@@ -38,6 +38,81 @@ class _BodyState extends State<Body> {
     setState(() {
       role;
     });
+  }
+
+  Widget btnwgt(context) {
+    return SafeArea(
+      child: Container(
+        child: Row(
+          children: [
+            Column(
+              children: [
+                TextButton(
+                    onPressed: () => Navigator.push(context, MaterialPageRoute(
+                          builder: (context) {
+                            return RegisterScreen();
+                          },
+                        )),
+                    child: Text("RegisterScreen")),
+                role == "a"
+                    ? TextButton(
+                        onPressed: () =>
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context) {
+                                return Adimnbar();
+                              },
+                            )),
+                        // ignore: prefer_const_constructors
+                        child: Text("admin area dashboard"))
+                    : SizedBox(),
+                TextButton(
+                    onPressed: () => Navigator.push(context, MaterialPageRoute(
+                          builder: (context) {
+                            return Homepage();
+                          },
+                        )),
+                    child: Text("HomePage")),
+                TextButton(
+                    onPressed: () => Navigator.push(context, MaterialPageRoute(
+                          builder: (context) {
+                            return Profile();
+                          },
+                        )),
+                    child: Text("admin area user profile")),
+                TextButton(
+                    onPressed: () => Navigator.push(context, MaterialPageRoute(
+                          builder: (context) {
+                            return UserProfile();
+                          },
+                        )),
+                    child: Text("User Profile")),
+                TextButton(
+                    onPressed: () => Navigator.push(context, MaterialPageRoute(
+                          builder: (context) {
+                            return Favouritepage();
+                          },
+                        )),
+                    child: Text("user favourite page")),
+                TextButton(
+                    onPressed: () => Navigator.push(context, MaterialPageRoute(
+                          builder: (context) {
+                            return LoginScreen();
+                          },
+                        )),
+                    child: Text("Login Page")),
+                TextButton(
+                    onPressed: () => Navigator.push(context, MaterialPageRoute(
+                          builder: (context) {
+                            return Category();
+                          },
+                        )),
+                    child: Text("category page")),
+              ],
+            )
+          ],
+        ),
+      ),
+    );
   }
 
   @override
@@ -103,80 +178,6 @@ class _BodyState extends State<Body> {
     //     ),
     //   ),
     // );
-  }
-
-  Widget btnwgt(context) {
-    return SafeArea(
-      child: Container(
-        child: Row(
-          children: [
-            Column(
-              children: [
-                TextButton(
-                    onPressed: () => Navigator.push(context, MaterialPageRoute(
-                          builder: (context) {
-                            return RegisterScreen();
-                          },
-                        )),
-                    child: Text("RegisterScreen")),
-                role == "a"
-                    ? TextButton(
-                        onPressed: () =>
-                            Navigator.push(context, MaterialPageRoute(
-                              builder: (context) {
-                                return Adimnbar();
-                              },
-                            )),
-                        child: Text("admin area dashboard"))
-                    : SizedBox(),
-                TextButton(
-                    onPressed: () => Navigator.push(context, MaterialPageRoute(
-                          builder: (context) {
-                            return Homepage();
-                          },
-                        )),
-                    child: Text("HomePage")),
-                TextButton(
-                    onPressed: () => Navigator.push(context, MaterialPageRoute(
-                          builder: (context) {
-                            return Profile();
-                          },
-                        )),
-                    child: Text("admin area user profile")),
-                TextButton(
-                    onPressed: () => Navigator.push(context, MaterialPageRoute(
-                          builder: (context) {
-                            return UserProfile();
-                          },
-                        )),
-                    child: Text("User Profile")),
-                TextButton(
-                    onPressed: () => Navigator.push(context, MaterialPageRoute(
-                          builder: (context) {
-                            return Favouritepage();
-                          },
-                        )),
-                    child: Text("user favourite page")),
-                TextButton(
-                    onPressed: () => Navigator.push(context, MaterialPageRoute(
-                          builder: (context) {
-                            return LoginScreen();
-                          },
-                        )),
-                    child: Text("Login Page")),
-                TextButton(
-                    onPressed: () => Navigator.push(context, MaterialPageRoute(
-                          builder: (context) {
-                            return Category();
-                          },
-                        )),
-                    child: Text("category page")),
-              ],
-            )
-          ],
-        ),
-      ),
-    );
   }
 }
 
