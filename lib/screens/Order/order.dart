@@ -248,7 +248,6 @@ class _OrderState extends State<Order> {
                         ),
                         hintText: 'Coupon',
                         hintStyle: TextStyle(fontSize: 12.0)),
-                    keyboardType: TextInputType.number,
                     onChanged: (value) {
                       coupon = value.toString();
                     },
